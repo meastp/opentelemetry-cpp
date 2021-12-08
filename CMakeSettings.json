@@ -4,9 +4,7 @@
       "name": "nostd-x64-Debug",
       "generator": "Ninja",
       "configurationType": "Debug",
-        "inheritEnvironments": [
-          "msvc_x64_x64"
-        ],
+      "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${projectDir}\\out\\vs2019\\${name}",
       "installRoot": "${projectDir}\\out\\vs2019\\${name}\\install",
       "cmakeCommandArgs": "",
@@ -29,9 +27,7 @@
       "name": "nostd-x64-Release",
       "generator": "Ninja",
       "configurationType": "Release",
-        "inheritEnvironments": [
-          "msvc_x64_x64"
-        ],
+      "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${projectDir}\\out\\vs2019\\${name}",
       "installRoot": "${projectDir}\\out\\vs2019\\${name}\\install",
       "cmakeCommandArgs": "",
@@ -55,9 +51,7 @@
       "name": "stdlib-x64-Debug",
       "generator": "Ninja",
       "configurationType": "Debug",
-      "inheritEnvironments": [
-        "msvc_x64_x64"
-      ],
+      "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${projectDir}\\out\\vs2019\\${name}",
       "installRoot": "${projectDir}\\out\\vs2019\\${name}\\install",
       "cmakeCommandArgs": "",
@@ -71,7 +65,7 @@
         },
         {
           "name": "WITH_OTLP",
-          "value": "True",
+          "value": "False",
           "type": "BOOL"
         },
         {
@@ -81,8 +75,17 @@
         },
         {
           "name": "WITH_PROMETHEUS",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "VCPKG_MANIFEST_MODE",
           "value": "True",
           "type": "BOOL"
+        },
+        {
+          "name": "BUILD_SHARED_LIBS",
+          "value": "TRUE"
         }
       ]
     },
@@ -90,9 +93,7 @@
       "name": "stdlib-x64-Release",
       "generator": "Ninja",
       "configurationType": "Release",
-      "inheritEnvironments": [
-        "msvc_x64_x64"
-      ],
+      "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${projectDir}\\out\\vs2019\\${name}",
       "installRoot": "${projectDir}\\out\\vs2019\\${name}\\install",
       "cmakeCommandArgs": "",

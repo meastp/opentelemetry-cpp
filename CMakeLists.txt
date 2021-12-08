@@ -9,17 +9,6 @@ project(opentelemetry-cpp)
 # Mark variables as used so cmake doesn't complain about them
 mark_as_advanced(CMAKE_TOOLCHAIN_FILE)
 
-# Autodetect vcpkg toolchain
-if(DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
-  set(CMAKE_TOOLCHAIN_FILE
-      "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
-      CACHE STRING "")
-endif()
-
-if(VCPKG_CHAINLOAD_TOOLCHAIN_FILE)
-  include("${VCPKG_CHAINLOAD_TOOLCHAIN_FILE}")
-endif()
-
 file(READ "${CMAKE_CURRENT_LIST_DIR}/api/include/opentelemetry/version.h"
      OPENTELEMETRY_CPP_HEADER_VERSION_H)
 if(OPENTELEMETRY_CPP_HEADER_VERSION_H MATCHES
@@ -78,8 +67,8 @@ if(WITH_STL)
   # Guidelines Support Library path. Used if we are not on not get C++20.
   #
   # TODO: respect WITH_ABSEIL as alternate implementation of std::span
-  set(GSL_DIR third_party/ms-gsl)
-  include_directories(${GSL_DIR}/include)
+  #set(GSL_DIR third_party/ms-gsl)
+  #include_directories(${GSL_DIR}/include)
 
   # Optimize for speed to reduce the hops
   if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
@@ -142,25 +131,8 @@ endif()
 
 find_package(Threads)
 
-function(install_windows_deps)
-  # Bootstrap vcpkg from CMake and auto-install deps in case if we are missing
-  # deps on Windows
-  message("Installing build tools and dependencies...")
-  execute_process(
-    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/tools/setup-buildtools.cmd)
-  set(CMAKE_TOOLCHAIN_FILE
-      ${CMAKE_CURRENT_SOURCE_DIR}/tools/vcpkg/scripts/buildsystems/vcpkg.cmake
-      PARENT_SCOPE)
-endfunction()
-
 if(WITH_JAEGER)
   find_package(Thrift QUIET CONFIG)
-  if(NOT Thrift_FOUND)
-    # Install Thrift and propagate via vcpkg toolchain file
-    if(WIN32 AND (NOT DEFINED CMAKE_TOOLCHAIN_FILE))
-      install_windows_deps()
-    endif()
-  endif()
 endif()
 
 if(MSVC)
@@ -189,9 +161,9 @@ if(WITH_OTLP)
   find_package(Protobuf)
   find_package(gRPC)
   if((NOT Protobuf_FOUND AND NOT PROTOBUF_FOUND) OR (NOT gRPC_FOUND))
-    if(WIN32 AND (NOT DEFINED CMAKE_TOOLCHAIN_FILE))
-      install_windows_deps()
-    endif()
+    #if(WIN32 AND (NOT DEFINED CMAKE_TOOLCHAIN_FILE))
+    #  install_windows_deps()
+    #endif()
 
     if(WIN32 AND (NOT DEFINED CMAKE_TOOLCHAIN_FILE))
       message(STATUS_FATAL "Windows dependency installation failed!")
@@ -247,13 +219,6 @@ if(BUILD_TESTING)
         ${CMAKE_BINARY_DIR}/lib/libgtest.a
         ${CMAKE_BINARY_DIR}/lib/libgtest_main.a
         ${CMAKE_BINARY_DIR}/lib/libgmock.a)
-  elseif(WIN32)
-    # Make sure we are always bootsrapped with vcpkg on Windows
-    find_package(GTest)
-    if(NOT (GTEST_FOUND OR GTest_FOUND))
-      install_windows_deps()
-      find_package(GTest REQUIRED)
-    endif()
   else()
     # Prefer GTest installed by OS distro, brew or vcpkg package manager
     find_package(GTest REQUIRED)

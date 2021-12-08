@@ -1,0 +1,31 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg/master/scripts/vcpkg.schema.json",
+  "name": "opentelemetry-cpp-dev",
+  "version-semver": "1.0.1",
+  "port-version": 0,
+  "description": [
+    "OpenTelemetry is a collection of tools, APIs, and SDKs.",
+    "You use it to instrument, generate, collect, and export telemetry data (metrics, logs, and traces) for analysis in order to understand your software's performance and behavior."
+  ],
+  "homepage": "https://github.com/open-telemetry/opentelemetry-cpp",
+  "dependencies": [
+    "curl",
+    "nlohmann-json",
+    "gtest",
+    "ms-gsl",
+    "abseil",
+    "grpc",
+    "prometheus-cpp",
+    "thrift",
+    "benchmark",
+    "protobuf",
+    {
+      "name": "vcpkg-cmake",
+      "host": true
+    },
+    {
+      "name": "vcpkg-cmake-config",
+      "host": true
+    }
+  ]
+}
