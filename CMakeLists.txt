@@ -70,16 +70,16 @@ else()
 endif()
 message(STATUS "Building for architecture ARCH=${ARCH}")
 
-# Autodetect vcpkg toolchain
-if(DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
-  set(CMAKE_TOOLCHAIN_FILE
-      "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
-      CACHE STRING "")
-endif()
-
-if(VCPKG_CHAINLOAD_TOOLCHAIN_FILE)
-  include("${VCPKG_CHAINLOAD_TOOLCHAIN_FILE}")
-endif()
+## Autodetect vcpkg toolchain
+#if(DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+#  set(CMAKE_TOOLCHAIN_FILE
+#      "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+#      CACHE STRING "")
+#endif()
+#
+#if(VCPKG_CHAINLOAD_TOOLCHAIN_FILE)
+#  include("${VCPKG_CHAINLOAD_TOOLCHAIN_FILE}")
+#endif()
 
 file(READ "${CMAKE_CURRENT_LIST_DIR}/api/include/opentelemetry/version.h"
      OPENTELEMETRY_CPP_HEADER_VERSION_H)
@@ -142,13 +142,13 @@ if(WITH_STL)
   # Guidelines Support Library path. Used if we are not on not get C++20.
   #
   # TODO: respect WITH_ABSEIL as alternate implementation of std::span
-  find_package(Microsoft.GSL QUIET)
-  if(TARGET Microsoft.GSL::GSL)
-    list(APPEND CORE_RUNTIME_LIBS Microsoft.GSL::GSL)
-  else()
-    set(GSL_DIR third_party/ms-gsl)
-    include_directories(${GSL_DIR}/include)
-  endif()
+  #find_package(Microsoft.GSL QUIET)
+  #if(TARGET Microsoft.GSL::GSL)
+  #  list(APPEND CORE_RUNTIME_LIBS Microsoft.GSL::GSL)
+  #else()
+  #set(GSL_DIR third_party/ms-gsl)
+  #include_directories(${GSL_DIR}/include)
+  #endif()
 
   # Optimize for speed to reduce the hops
   if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
@@ -222,29 +222,29 @@ endif()
 
 find_package(Threads)
 
-function(install_windows_deps)
-  # Bootstrap vcpkg from CMake and auto-install deps in case if we are missing
-  # deps on Windows. Respect the target architecture variable.
-  set(VCPKG_TARGET_ARCHITECTURE
-      ${ARCH}
-      PARENT_SCOPE)
-  message("Installing build tools and dependencies...")
-  set(ENV{ARCH} ${ARCH})
-  execute_process(
-    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/tools/setup-buildtools.cmd)
-  set(CMAKE_TOOLCHAIN_FILE
-      ${CMAKE_CURRENT_SOURCE_DIR}/tools/vcpkg/scripts/buildsystems/vcpkg.cmake
-      PARENT_SCOPE)
-endfunction()
+#function(install_windows_deps)
+#  # Bootstrap vcpkg from CMake and auto-install deps in case if we are missing
+#  # deps on Windows. Respect the target architecture variable.
+#  set(VCPKG_TARGET_ARCHITECTURE
+#      ${ARCH}
+#      PARENT_SCOPE)
+#  message("Installing build tools and dependencies...")
+#  set(ENV{ARCH} ${ARCH})
+#  execute_process(
+#    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/tools/setup-buildtools.cmd)
+#  set(CMAKE_TOOLCHAIN_FILE
+#      ${CMAKE_CURRENT_SOURCE_DIR}/tools/vcpkg/scripts/buildsystems/vcpkg.cmake
+#      PARENT_SCOPE)
+#endfunction()
 
 if(WITH_JAEGER)
   find_package(Thrift QUIET)
-  if(NOT Thrift_FOUND)
-    # Install Thrift and propagate via vcpkg toolchain file
-    if(WIN32 AND (NOT DEFINED CMAKE_TOOLCHAIN_FILE))
-      install_windows_deps()
-    endif()
-  endif()
+  #if(NOT Thrift_FOUND)
+  #  # Install Thrift and propagate via vcpkg toolchain file
+  #  if(WIN32 AND (NOT DEFINED CMAKE_TOOLCHAIN_FILE))
+  #    install_windows_deps()
+  #  endif()
+  #endif()
 endif()
 
 if(MSVC)
@@ -325,12 +325,12 @@ if(WITH_OTLP)
   set(protobuf_MODULE_COMPATIBLE ON)
   find_package(Protobuf)
   if(WITH_OTLP_GRPC)
-    find_package(gRPC)
+  find_package(gRPC)
   endif()
   if((NOT Protobuf_FOUND AND NOT PROTOBUF_FOUND) OR (NOT gRPC_FOUND))
-    if(WIN32 AND (NOT DEFINED CMAKE_TOOLCHAIN_FILE))
-      install_windows_deps()
-    endif()
+    #if(WIN32 AND (NOT DEFINED CMAKE_TOOLCHAIN_FILE))
+    #  install_windows_deps()
+    #endif()
 
     if(WIN32 AND (NOT DEFINED CMAKE_TOOLCHAIN_FILE))
       message(STATUS_FATAL "Windows dependency installation failed!")
@@ -386,13 +386,6 @@ if(BUILD_TESTING)
         ${CMAKE_BINARY_DIR}/lib/libgtest.a
         ${CMAKE_BINARY_DIR}/lib/libgtest_main.a
         ${CMAKE_BINARY_DIR}/lib/libgmock.a)
-  elseif(WIN32)
-    # Make sure we are always bootsrapped with vcpkg on Windows
-    find_package(GTest)
-    if(NOT (GTEST_FOUND OR GTest_FOUND))
-      install_windows_deps()
-      find_package(GTest REQUIRED)
-    endif()
   else()
     # Prefer GTest installed by OS distro, brew or vcpkg package manager
     find_package(GTest REQUIRED)
