@@ -1,0 +1,6 @@
+add_library(foo_library foo_library.cc)
+target_link_libraries(foo_library ${CMAKE_THREAD_LIBS_INIT} opentelemetry_api)
+                  
+target_compile_definitions(foo_library PRIVATE FOO_LIBRARY_EXPORT)
+
+target_include_directories(foo_library PUBLIC ${CMAKE_CURRENT_LIST_DIR})

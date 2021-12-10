@@ -1,6 +1,8 @@
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
 
+#include "foo_library.h"
+
 #include "opentelemetry/trace/provider.h"
 
 namespace trace = opentelemetry::trace;
