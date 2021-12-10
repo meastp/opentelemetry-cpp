@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "opentelemetry/export.h"
 #include "opentelemetry/sdk/common/atomic_shared_ptr.h"
 #include "opentelemetry/sdk/instrumentationlibrary/instrumentation_library.h"
 #include "opentelemetry/sdk/resource/resource.h"
@@ -23,7 +24,7 @@ namespace trace
 
 using namespace opentelemetry::sdk::instrumentationlibrary;
 
-class Tracer final : public trace_api::Tracer, public std::enable_shared_from_this<Tracer>
+class OTEL_API Tracer final : public trace_api::Tracer, public std::enable_shared_from_this<Tracer>
 {
 public:
   /** Construct a new Tracer with the given context pipeline. */

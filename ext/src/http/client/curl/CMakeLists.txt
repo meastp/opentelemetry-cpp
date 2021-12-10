@@ -14,6 +14,8 @@ if(CURL_FOUND)
     target_link_libraries(http_client_curl PUBLIC opentelemetry_ext
                                                   ${CURL_LIBRARIES})
   endif()
+  
+    target_compile_definitions(http_client_curl PUBLIC OTEL_EXPORT)
 
   install(
     TARGETS http_client_curl

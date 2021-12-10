@@ -9,6 +9,8 @@ target_include_directories(
 
 target_link_libraries(opentelemetry_exporter_ostream_span
                       PUBLIC opentelemetry_trace)
+  
+target_compile_definitions(opentelemetry_exporter_ostream_span PUBLIC OTEL_EXPORT)
 
 install(
   TARGETS opentelemetry_exporter_ostream_span

@@ -4,6 +4,7 @@
 #pragma once
 
 #include "http_client_curl.h"
+#include "opentelemetry/export.h"
 #include "opentelemetry/ext/http/client/http_client.h"
 #include "opentelemetry/version.h"
 
@@ -39,7 +40,7 @@ enum class RequestMode
   Async
 };
 
-class HttpOperation
+class OTEL_API HttpOperation
 {
 public:
   void DispatchEvent(opentelemetry::ext::http::client::SessionState type, std::string reason = "")

@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "nlohmann/json.hpp"
+#include "opentelemetry/export.h"
 #include "opentelemetry/ext/zpages/static/tracez_index.h"
 #include "opentelemetry/ext/zpages/static/tracez_script.h"
 #include "opentelemetry/ext/zpages/static/tracez_style.h"
@@ -28,7 +29,7 @@ namespace ext
 namespace zpages
 {
 
-class TracezHttpServer : public opentelemetry::ext::zpages::zPagesHttpServer
+class OTEL_API TracezHttpServer : public opentelemetry::ext::zpages::zPagesHttpServer
 {
 public:
   /**

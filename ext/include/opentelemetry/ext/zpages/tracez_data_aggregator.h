@@ -13,6 +13,7 @@
 #include <thread>
 #include <unordered_set>
 
+#include "opentelemetry/export.h"
 #include "opentelemetry/ext/zpages/latency_boundaries.h"
 #include "opentelemetry/ext/zpages/tracez_data.h"
 #include "opentelemetry/ext/zpages/tracez_shared_data.h"
@@ -43,7 +44,7 @@ namespace zpages
  * TODO: Consider a singleton pattern for this class, not sure if multiple
  * instances of this class should exist.
  */
-class TracezDataAggregator
+class OTEL_API TracezDataAggregator
 {
 public:
   /**

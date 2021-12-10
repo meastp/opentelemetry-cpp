@@ -4,6 +4,7 @@
 #pragma once
 
 #include "http_operation_curl.h"
+#include "opentelemetry/export.h"
 #include "opentelemetry/ext/http/client/http_client.h"
 #include "opentelemetry/ext/http/common/url_parser.h"
 #include "opentelemetry/version.h"
@@ -24,7 +25,7 @@ namespace curl
 
 const opentelemetry::ext::http::client::StatusCode Http_Ok = 200;
 
-class Request : public opentelemetry::ext::http::client::Request
+class OTEL_API Request : public opentelemetry::ext::http::client::Request
 {
 public:
   Request() : method_(opentelemetry::ext::http::client::Method::Get), uri_("/") {}
@@ -71,7 +72,7 @@ public:
   std::chrono::milliseconds timeout_ms_{5000};  // ms
 };
 
-class Response : public opentelemetry::ext::http::client::Response
+class OTEL_API Response : public opentelemetry::ext::http::client::Response
 {
 public:
   Response() : status_code_(Http_Ok) {}
@@ -124,7 +125,7 @@ public:
 
 class HttpClient;
 
-class Session : public opentelemetry::ext::http::client::Session
+class OTEL_API Session : public opentelemetry::ext::http::client::Session
 {
 public:
   Session(HttpClient &http_client,
@@ -194,7 +195,7 @@ private:
   bool is_session_active_;
 };
 
-class HttpClientSync : public opentelemetry::ext::http::client::HttpClientSync
+class OTEL_API HttpClientSync : public opentelemetry::ext::http::client::HttpClientSync
 {
 public:
   HttpClientSync() { curl_global_init(CURL_GLOBAL_ALL); }
@@ -226,7 +227,7 @@ public:
 
   opentelemetry::ext::http::client::Result Post(
       const nostd::string_view &url,
-      const Body &body,
+                           const Body &body,
       const opentelemetry::ext::http::client::Headers &headers) noexcept override
   {
     HttpOperation curl_operation(opentelemetry::ext::http::client::Method::Post, url.data(),
@@ -253,7 +254,7 @@ public:
   ~HttpClientSync() { curl_global_cleanup(); }
 };
 
-class HttpClient : public opentelemetry::ext::http::client::HttpClient
+class OTEL_API HttpClient : public opentelemetry::ext::http::client::HttpClient
 {
 public:
   // The call (curl_global_init) is not thread safe. Ensure this is called only once.

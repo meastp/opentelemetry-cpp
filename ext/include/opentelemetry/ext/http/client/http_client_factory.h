@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 #pragma once
+#include "opentelemetry/export.h"
 #include "opentelemetry/ext/http/client/http_client.h"
 
 OPENTELEMETRY_BEGIN_NAMESPACE
@@ -11,7 +12,7 @@ namespace http
 {
 namespace client
 {
-class HttpClientFactory
+class OTEL_API HttpClientFactory
 {
 public:
   static std::shared_ptr<HttpClientSync> CreateSync();

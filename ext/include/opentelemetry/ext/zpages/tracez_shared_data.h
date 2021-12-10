@@ -10,6 +10,7 @@
 #include <utility>
 #include <vector>
 
+#include "opentelemetry/export.h"
 #include "opentelemetry/ext/zpages/threadsafe_span_data.h"
 #include "opentelemetry/sdk/trace/processor.h"
 #include "opentelemetry/sdk/trace/recordable.h"
@@ -23,7 +24,7 @@ namespace zpages
  * The span processor passes and stores running and completed recordables (casted as span_data)
  * to be used by the TraceZ Data Aggregator.
  */
-class TracezSharedData
+class OTEL_API TracezSharedData
 {
 public:
   struct CollectedSpans

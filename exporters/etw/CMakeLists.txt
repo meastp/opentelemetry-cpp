@@ -9,10 +9,12 @@ set_target_properties(opentelemetry_exporter_etw PROPERTIES EXPORT_NAME
                                                             etw_exporter)
 
 target_link_libraries(opentelemetry_exporter_etw
-                      INTERFACE nlohmann_json::nlohmann_json)
+                      INTERFACE opentelemetry_trace nlohmann_json::nlohmann_json)
 if(nlohmann_json_clone)
   add_dependencies(opentelemetry_exporter_etw nlohmann_json::nlohmann_json)
 endif()
+
+target_compile_definitions(opentelemetry_exporter_etw INTERFACE OTEL_EXPORT)
 
 install(
   TARGETS opentelemetry_exporter_etw
@@ -46,6 +48,12 @@ if(BUILD_TESTING)
   target_link_libraries(
     etw_perf_test benchmark::benchmark ${GTEST_BOTH_LIBRARIES}
     opentelemetry_exporter_etw ${CMAKE_THREAD_LIBS_INIT})
+
+  target_compile_definitions(etw_provider_test PUBLIC OTEL_EXPORT)
+          
+  target_compile_definitions(etw_tracer_test PUBLIC OTEL_EXPORT)
+          
+  target_compile_definitions(etw_perf_test PUBLIC OTEL_EXPORT)
 
   gtest_add_tests(
     TARGET etw_provider_test
