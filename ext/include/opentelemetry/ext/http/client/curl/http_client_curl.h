@@ -4,6 +4,7 @@
 #pragma once
 
 #include "http_operation_curl.h"
+#include "opentelemetry/export.h"
 #include "opentelemetry/ext/http/client/http_client.h"
 #include "opentelemetry/ext/http/common/url_parser.h"
 #include "opentelemetry/version.h"
@@ -25,7 +26,7 @@ namespace curl
 namespace http_client                 = opentelemetry::ext::http::client;
 const http_client::StatusCode Http_Ok = 200;
 
-class Request : public http_client::Request
+class OTEL_API Request : public http_client::Request
 {
 public:
   Request() : method_(http_client::Method::Get), uri_("/") {}
@@ -66,7 +67,7 @@ public:
   std::chrono::milliseconds timeout_ms_{5000};  // ms
 };
 
-class Response : public http_client::Response
+class OTEL_API Response : public http_client::Response
 {
 public:
   Response() : status_code_(Http_Ok) {}
@@ -113,7 +114,7 @@ public:
 
 class HttpClient;
 
-class Session : public http_client::Session
+class OTEL_API Session : public http_client::Session
 {
 public:
   Session(HttpClient &http_client,
@@ -182,7 +183,7 @@ private:
   bool is_session_active_;
 };
 
-class HttpClientSync : public http_client::HttpClientSync
+class OTEL_API HttpClientSync : public http_client::HttpClientSync
 {
 public:
   HttpClientSync() { curl_global_init(CURL_GLOBAL_ALL); }
@@ -239,7 +240,7 @@ public:
   ~HttpClientSync() { curl_global_cleanup(); }
 };
 
-class HttpClient : public http_client::HttpClient
+class OTEL_API HttpClient : public http_client::HttpClient
 {
 public:
   // The call (curl_global_init) is not thread safe. Ensure this is called only once.

@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "opentelemetry/export.h"
 #include "opentelemetry/nostd/type_traits.h"
 #include "opentelemetry/sdk/trace/exporter.h"
 #include "opentelemetry/sdk/trace/span_data.h"
@@ -25,7 +26,7 @@ namespace trace
 /**
  * The OStreamSpanExporter exports span data through an ostream
  */
-class OStreamSpanExporter final : public sdktrace::SpanExporter
+class OTEL_API OStreamSpanExporter final : public sdktrace::SpanExporter
 {
 public:
   /**

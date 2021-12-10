@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "opentelemetry/export.h"
 #include "opentelemetry/sdk/common/atomic_unique_ptr.h"
 #include "opentelemetry/sdk/resource/resource.h"
 #include "opentelemetry/sdk/trace/processor.h"
@@ -29,7 +30,7 @@ namespace trace
  * references to Processor, Exporter, Recordable, Custom Iterator etc. should exist, and all
  *   associated pipelines will have been flushed.
  */
-class TracerContext
+class OTEL_API TracerContext
 {
 public:
   explicit TracerContext(

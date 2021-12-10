@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "opentelemetry/export.h"
 #include "opentelemetry/sdk/trace/sampler.h"
 
 OPENTELEMETRY_BEGIN_NAMESPACE
@@ -15,7 +16,7 @@ namespace trace_api = opentelemetry::trace;
  * The TraceIdRatioBased sampler computes and returns a decision based on the
  * provided trace_id and the configured ratio.
  */
-class TraceIdRatioBasedSampler : public Sampler
+class OTEL_API TraceIdRatioBasedSampler : public Sampler
 {
 public:
   /**

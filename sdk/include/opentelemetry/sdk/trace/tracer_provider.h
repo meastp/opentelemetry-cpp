@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 
+#include "opentelemetry/export.h"
 #include "opentelemetry/nostd/shared_ptr.h"
 #include "opentelemetry/sdk/resource/resource.h"
 #include "opentelemetry/sdk/trace/processor.h"
@@ -22,7 +23,7 @@ namespace sdk
 {
 namespace trace
 {
-class TracerProvider final : public opentelemetry::trace::TracerProvider
+class OTEL_API TracerProvider final : public opentelemetry::trace::TracerProvider
 {
 public:
   /**

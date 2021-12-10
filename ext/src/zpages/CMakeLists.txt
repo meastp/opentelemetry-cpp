@@ -14,6 +14,8 @@ target_link_libraries(
   opentelemetry_zpages PUBLIC opentelemetry_ext opentelemetry_api
                               opentelemetry_trace)
 
+target_compile_definitions(opentelemetry_zpages PUBLIC OTEL_EXPORT)
+
 install(
   TARGETS opentelemetry_zpages
   EXPORT "${PROJECT_NAME}-target"

@@ -5,6 +5,7 @@
 
 #include <mutex>
 
+#include "opentelemetry/export.h"
 #include "opentelemetry/sdk/trace/tracer.h"
 #include "opentelemetry/version.h"
 
@@ -15,7 +16,7 @@ namespace trace
 {
 namespace trace_api = opentelemetry::trace;
 
-class Span final : public trace_api::Span
+class OTEL_API Span final : public trace_api::Span
 {
 public:
   Span(std::shared_ptr<Tracer> &&tracer,

@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "opentelemetry/export.h"
 #include "opentelemetry/nostd/span.h"
 #include "opentelemetry/version.h"
 #include "src/common/fast_random_number_generator.h"
@@ -16,7 +17,7 @@ namespace common
  * Utility methods for creating random data, based on a seeded thread-local
  * number generator.
  */
-class Random
+class OTEL_API Random
 {
 public:
   /**
