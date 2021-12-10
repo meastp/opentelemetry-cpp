@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "opentelemetry/common/key_value_iterable.h"
+#include "opentelemetry/export.h"
 #include "opentelemetry/nostd/utility.h"
 #include "opentelemetry/version.h"
 
@@ -44,7 +45,7 @@ struct is_key_value_iterable
  * 'non-standard' type to one of the standard types.
  */
 template <class T>
-class KeyValueIterableView final : public KeyValueIterable
+class OTEL_API KeyValueIterableView final : public KeyValueIterable
 {
 
 public:

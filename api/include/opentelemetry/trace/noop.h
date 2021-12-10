@@ -8,6 +8,7 @@
 // used directly. Please refer to span.h and tracer.h for documentation on these interfaces.
 
 #include "opentelemetry/context/runtime_context.h"
+#include "opentelemetry/export.h"
 #include "opentelemetry/nostd/string_view.h"
 #include "opentelemetry/nostd/unique_ptr.h"
 #include "opentelemetry/trace/span.h"
@@ -65,22 +66,14 @@ private:
 /**
  * No-op implementation of Tracer.
  */
-class NoopTracer final : public Tracer, public std::enable_shared_from_this<NoopTracer>
+class OTEL_API NoopTracer final : public Tracer, public std::enable_shared_from_this<NoopTracer>
 {
 public:
   // Tracer
   nostd::shared_ptr<Span> StartSpan(nostd::string_view /*name*/,
                                     const common::KeyValueIterable & /*attributes*/,
                                     const SpanContextKeyValueIterable & /*links*/,
-                                    const StartSpanOptions & /*options*/) noexcept override
-  {
-    // Don't allocate a no-op span for every StartSpan call, but use a static
-    // singleton for this case.
-    static nostd::shared_ptr<trace_api::Span> noop_span(
-        new trace_api::NoopSpan{this->shared_from_this()});
-
-    return noop_span;
-  }
+                                    const StartSpanOptions & /*options*/) noexcept override;
 
   void ForceFlushWithMicroseconds(uint64_t /*timeout*/) noexcept override {}
 

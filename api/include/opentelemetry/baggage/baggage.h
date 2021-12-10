@@ -6,6 +6,7 @@
 #include <cctype>
 
 #include "opentelemetry/common/kv_properties.h"
+#include "opentelemetry/export.h"
 #include "opentelemetry/nostd/shared_ptr.h"
 #include "opentelemetry/nostd/string_view.h"
 #include "opentelemetry/version.h"
@@ -15,7 +16,7 @@ OPENTELEMETRY_BEGIN_NAMESPACE
 namespace baggage
 {
 
-class Baggage
+class OTEL_API Baggage
 {
 public:
   static constexpr size_t kMaxKeyValuePairs = 180;
@@ -33,11 +34,7 @@ public:
       : kv_properties_(new opentelemetry::common::KeyValueProperties(keys_and_values))
   {}
 
-  static nostd::shared_ptr<Baggage> GetDefault()
-  {
-    static nostd::shared_ptr<Baggage> baggage{new Baggage()};
-    return baggage;
-  }
+  static nostd::shared_ptr<Baggage> GetDefault();
 
   /* Get value for key in the baggage
      @returns true if key is found, false otherwise

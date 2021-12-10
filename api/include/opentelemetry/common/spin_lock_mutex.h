@@ -7,6 +7,7 @@
 #include <chrono>
 #include <thread>
 
+#include "opentelemetry/export.h"
 #include "opentelemetry/version.h"
 
 #if defined(_MSC_VER)
@@ -49,7 +50,7 @@ constexpr int SPINLOCK_SLEEP_MS        = 1;
  * This class implements the `BasicLockable` specification:
  * https://en.cppreference.com/w/cpp/named_req/BasicLockable
  */
-class SpinLockMutex
+class OTEL_API SpinLockMutex
 {
 public:
   SpinLockMutex() noexcept {}

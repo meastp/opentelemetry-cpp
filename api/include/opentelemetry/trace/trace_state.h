@@ -15,6 +15,7 @@
 #endif
 
 #include "opentelemetry/common/kv_properties.h"
+#include "opentelemetry/export.h"
 #include "opentelemetry/nostd/shared_ptr.h"
 #include "opentelemetry/nostd/span.h"
 #include "opentelemetry/nostd/string_view.h"
@@ -32,7 +33,7 @@ namespace trace
  * For more information, see the W3C Trace Context specification:
  * https://www.w3.org/TR/trace-context
  */
-class TraceState
+class OTEL_API TraceState
 {
 public:
   static constexpr int kKeyMaxSize         = 256;
@@ -41,11 +42,7 @@ public:
   static constexpr auto kKeyValueSeparator = '=';
   static constexpr auto kMembersSeparator  = ',';
 
-  static nostd::shared_ptr<TraceState> GetDefault()
-  {
-    static nostd::shared_ptr<TraceState> ts{new TraceState()};
-    return ts;
-  }
+  static nostd::shared_ptr<TraceState> GetDefault();
 
   /**
    * Returns shared_ptr to a newly created TraceState parsed from the header provided.

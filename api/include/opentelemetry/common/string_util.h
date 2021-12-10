@@ -3,13 +3,14 @@
 
 #pragma once
 
+#include "opentelemetry/export.h"
 #include "opentelemetry/nostd/string_view.h"
 
 OPENTELEMETRY_BEGIN_NAMESPACE
 namespace common
 {
 
-class StringUtil
+class OTEL_API StringUtil
 {
 public:
   static nostd::string_view Trim(nostd::string_view str, size_t left, size_t right)

@@ -1,7 +1,9 @@
-add_library(opentelemetry_api INTERFACE)
+add_library(opentelemetry_api src/baggage/propagation/baggage_propagator.cc src/baggage/baggage.cc src/common/kv_properties.cc src/context/propagation/global_propagator.cc
+src/context/runtime_context.cc src/trace/noop.cc src/trace/provider.cc src/trace/trace_state.cc)
+
 target_include_directories(
   opentelemetry_api
-  INTERFACE "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>"
+  PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>"
             "$<INSTALL_INTERFACE:include>")
 
 set_target_properties(opentelemetry_api PROPERTIES EXPORT_NAME api)
@@ -41,18 +43,20 @@ if(BUILD_TESTING)
   add_subdirectory(test)
 endif()
 
+target_compile_definitions(opentelemetry_api PUBLIC OTEL_EXPORT)
+
 if(WITH_ABSEIL)
   target_compile_definitions(opentelemetry_api INTERFACE HAVE_ABSEIL)
 endif()
 
 if(WITH_STL)
   message("Building with standard library types...")
-  target_compile_definitions(opentelemetry_api INTERFACE HAVE_CPP_STDLIB
+  target_compile_definitions(opentelemetry_api PUBLIC HAVE_CPP_STDLIB
                                                          HAVE_GSL)
 else()
   message("Building with nostd types...")
 endif()
 
 if(CORE_RUNTIME_LIBS)
-  target_link_libraries(opentelemetry_api INTERFACE ${CORE_RUNTIME_LIBS})
+  target_link_libraries(opentelemetry_api PUBLIC ${CORE_RUNTIME_LIBS})
 endif()
