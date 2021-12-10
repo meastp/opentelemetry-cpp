@@ -7,6 +7,7 @@
 #include <chrono>
 #include <cstdint>
 
+#include "opentelemetry/export.h"
 #include "opentelemetry/version.h"
 
 OPENTELEMETRY_BEGIN_NAMESPACE
@@ -17,7 +18,7 @@ namespace common
  *
  * This is used for marking the beginning and end of an operation.
  */
-class SystemTimestamp
+class OTEL_API SystemTimestamp
 {
 public:
   /**
@@ -96,7 +97,7 @@ private:
  *
  * This is used for calculating the duration of an operation.
  */
-class SteadyTimestamp
+class OTEL_API SteadyTimestamp
 {
 public:
   /**

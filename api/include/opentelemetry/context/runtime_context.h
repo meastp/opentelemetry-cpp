@@ -4,6 +4,7 @@
 #pragma once
 
 #include "opentelemetry/context/context.h"
+#include "opentelemetry/export.h"
 
 OPENTELEMETRY_BEGIN_NAMESPACE
 namespace context
@@ -79,7 +80,7 @@ static RuntimeContextStorage *GetDefaultStorage() noexcept;
 // Provides a wrapper for propagating the context object globally.
 //
 // By default, a thread-local runtime context storage is used.
-class RuntimeContext
+class OTEL_API RuntimeContext
 {
 public:
   // Return the current context.
@@ -156,11 +157,7 @@ private:
     return GetStorage();
   }
 
-  static nostd::shared_ptr<RuntimeContextStorage> &GetStorage() noexcept
-  {
-    static nostd::shared_ptr<RuntimeContextStorage> context(GetDefaultStorage());
-    return context;
-  }
+  static nostd::shared_ptr<RuntimeContextStorage> &GetStorage() noexcept;
 };
 
 inline Token::~Token()
@@ -172,7 +169,7 @@ inline Token::~Token()
 // RuntimeContextStorage and provides a wrapper for propagating context through
 // cpp thread locally. This file must be included to use the RuntimeContext
 // class if another implementation has not been registered.
-class ThreadLocalContextStorage : public RuntimeContextStorage
+class OTEL_API ThreadLocalContextStorage : public RuntimeContextStorage
 {
 public:
   ThreadLocalContextStorage() noexcept = default;
@@ -305,11 +302,7 @@ private:
     Context *base_;
   };
 
-  Stack &GetStack()
-  {
-    static thread_local Stack stack_ = Stack();
-    return stack_;
-  }
+  Stack &GetStack();
 };
 
 static RuntimeContextStorage *GetDefaultStorage() noexcept

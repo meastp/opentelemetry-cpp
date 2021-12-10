@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "opentelemetry/export.h"
 #include "opentelemetry/nostd/string_view.h"
 
 /** DJB2 hash function below is near-perfect hash used by several systems.
@@ -23,7 +24,7 @@ OPENTELEMETRY_BEGIN_NAMESPACE
 namespace common
 {
 
-class StringUtil
+class OTEL_API StringUtil
 {
 public:
   static nostd::string_view Trim(nostd::string_view str, size_t left, size_t right)

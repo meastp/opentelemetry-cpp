@@ -4,6 +4,7 @@
 #pragma once
 
 #include "opentelemetry/common/attribute_value.h"
+#include "opentelemetry/export.h"
 #include "opentelemetry/nostd/function_ref.h"
 #include "opentelemetry/version.h"
 
@@ -13,7 +14,7 @@ namespace common
 /**
  * Supports internal iteration over a collection of key-value pairs.
  */
-class KeyValueIterable
+class OTEL_API KeyValueIterable
 {
 public:
   virtual ~KeyValueIterable() = default;

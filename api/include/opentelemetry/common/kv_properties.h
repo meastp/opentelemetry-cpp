@@ -5,6 +5,7 @@
 
 #include "opentelemetry/common/key_value_iterable_view.h"
 #include "opentelemetry/common/string_util.h"
+#include "opentelemetry/export.h"
 #include "opentelemetry/nostd/function_ref.h"
 #include "opentelemetry/nostd/shared_ptr.h"
 #include "opentelemetry/nostd/string_view.h"
@@ -20,7 +21,7 @@ namespace common
 {
 
 // Constructor parameter for KeyValueStringTokenizer
-struct KeyValueStringTokenizerOptions
+struct OTEL_API KeyValueStringTokenizerOptions
 {
   char member_separator     = ',';
   char key_value_separator  = '=';
@@ -28,7 +29,7 @@ struct KeyValueStringTokenizerOptions
 };
 
 // Tokenizer for key-value headers
-class KeyValueStringTokenizer
+class OTEL_API KeyValueStringTokenizer
 {
 public:
   KeyValueStringTokenizer(
@@ -37,11 +38,7 @@ public:
       : str_(str), opts_(opts), index_(0)
   {}
 
-  static nostd::string_view GetDefaultKeyOrValue()
-  {
-    static std::string default_str = "";
-    return default_str;
-  }
+  static nostd::string_view GetDefaultKeyOrValue();
 
   // Returns next key value in the string header
   // @param valid_kv : if the found kv pair is valid or not
@@ -134,7 +131,7 @@ private:
 };
 
 // Class to store fixed size array of key-value pairs of string type
-class KeyValueProperties
+class OTEL_API KeyValueProperties
 {
   // Class to store key-value pairs of string types
 public:

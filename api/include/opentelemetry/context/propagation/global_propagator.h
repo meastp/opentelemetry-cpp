@@ -11,6 +11,7 @@
 #include "opentelemetry/common/spin_lock_mutex.h"
 #include "opentelemetry/nostd/shared_ptr.h"
 
+#include "opentelemetry/export.h"
 #include "opentelemetry/version.h"
 
 OPENTELEMETRY_BEGIN_NAMESPACE
@@ -21,7 +22,7 @@ namespace propagation
 
 /* Stores the singleton TextMapPropagator */
 
-class GlobalTextMapPropagator
+class OTEL_API GlobalTextMapPropagator
 {
 public:
   static nostd::shared_ptr<TextMapPropagator> GetGlobalPropagator() noexcept
@@ -37,17 +38,9 @@ public:
   }
 
 private:
-  static nostd::shared_ptr<TextMapPropagator> &GetPropagator() noexcept
-  {
-    static nostd::shared_ptr<TextMapPropagator> propagator(new NoOpPropagator());
-    return propagator;
-  }
+  static nostd::shared_ptr<TextMapPropagator> &GetPropagator() noexcept;
 
-  static common::SpinLockMutex &GetLock() noexcept
-  {
-    static common::SpinLockMutex lock;
-    return lock;
-  }
+  static common::SpinLockMutex &GetLock() noexcept;
 };
 
 }  // namespace propagation

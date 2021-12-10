@@ -6,6 +6,7 @@
 #include "opentelemetry/baggage/baggage.h"
 #include "opentelemetry/baggage/baggage_context.h"
 #include "opentelemetry/context/propagation/text_map_propagator.h"
+#include "opentelemetry/export.h"
 #include "opentelemetry/version.h"
 
 OPENTELEMETRY_BEGIN_NAMESPACE
@@ -26,14 +27,14 @@ public:
 
   context::Context Extract(const opentelemetry::context::propagation::TextMapCarrier &carrier,
                            opentelemetry::context::Context &context) noexcept override
-  {
+{
     nostd::string_view baggage_str = carrier.Get(opentelemetry::baggage::kBaggageHeader);
     auto baggage                   = opentelemetry::baggage::Baggage::FromHeader(baggage_str);
     return opentelemetry::baggage::SetBaggage(context, baggage);
-  }
+}
 
   bool Fields(nostd::function_ref<bool(nostd::string_view)> callback) const noexcept override
-  {
+{
     return callback(kBaggageHeader);
   }
 };
