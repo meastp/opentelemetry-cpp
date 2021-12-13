@@ -290,3 +290,7 @@ private:
 }  // namespace baggage
 
 OPENTELEMETRY_END_NAMESPACE
+
+#ifdef OTEL_WITH_HEADER_ONLY_API
+#  include "opentelemetry/baggage/baggage.cc"
+#endif  // OTEL_WITH_HEADER_ONLY_API

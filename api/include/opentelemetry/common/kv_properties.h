@@ -267,3 +267,7 @@ public:
 };
 }  // namespace common
 OPENTELEMETRY_END_NAMESPACE
+
+#ifdef OTEL_WITH_HEADER_ONLY_API
+#  include "opentelemetry/common/kv_properties.cc"
+#endif  // OTEL_WITH_HEADER_ONLY_API

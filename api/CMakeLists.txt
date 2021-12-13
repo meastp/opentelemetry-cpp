@@ -1,9 +1,32 @@
-add_library(opentelemetry_api src/baggage/propagation/baggage_propagator.cc src/baggage/baggage.cc src/common/kv_properties.cc src/context/propagation/global_propagator.cc
-src/context/runtime_context.cc src/trace/noop.cc src/trace/provider.cc src/trace/trace_state.cc)
+if(WITH_HEADER_ONLY_API)
+    add_library(opentelemetry_api INTERFACE)
+    target_compile_definitions(opentelemetry_api INTERFACE OTEL_WITH_HEADER_ONLY_API)
+
+    if(MSVC)
+    if(BUILD_SHARED_LIBS)
+      message(
+        FATAL_ERROR
+          "Building header-only API combined with dynamic link libraries is not supported. Turn off option WITH_HEADER_ONLY_API to build the API as a dynamic link library as well, or turn off BUILD_SHARED_LIBS."
+      )
+      endif()
+    endif()
+else()
+    add_library(opentelemetry_api 
+        include/opentelemetry/baggage/propagation/baggage_propagator.cc 
+        include/opentelemetry/baggage/baggage.cc 
+        include/opentelemetry/common/kv_properties.cc 
+        include/opentelemetry/context/propagation/global_propagator.cc
+        include/opentelemetry/context/runtime_context.cc 
+        include/opentelemetry/trace/noop.cc 
+        include/opentelemetry/trace/provider.cc 
+        include/opentelemetry/trace/trace_state.cc)
+
+    target_compile_definitions(opentelemetry_api PUBLIC OTEL_EXPORT)
+endif()
 
 target_include_directories(
   opentelemetry_api
-  PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>"
+  INTERFACE "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>"
             "$<INSTALL_INTERFACE:include>")
 
 set_target_properties(opentelemetry_api PROPERTIES EXPORT_NAME api)
@@ -14,36 +37,64 @@ install(
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+  
+install(
+  FILES 
+  include/opentelemetry/config.h 
+  include/opentelemetry/export.h 
+  include/opentelemetry/version.h
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-set(LOGS_EXCLUDE_PATTERN "")
-if(NOT WITH_LOGS_PREVIEW)
-  set(LOGS_EXCLUDE_PATTERN "logs")
-endif()
-
-set(METRICS_EXCLUDE_PATTERN "")
-if(NOT WITH_METRICS_PREVIEW)
-  set(METRICS_EXCLUDE_PATTERN "metrics")
-endif()
 
 install(
-  DIRECTORY include/opentelemetry
-  DESTINATION include
-  FILES_MATCHING
-  PATTERN "*.h"
-  PATTERN "${METRICS_EXCLUDE_PATTERN}" EXCLUDE)
+      DIRECTORY 
+      include/opentelemetry/baggage 
+      include/opentelemetry/common 
+      include/opentelemetry/context 
+      include/opentelemetry/detail 
+      include/opentelemetry/nostd 
+      include/opentelemetry/plugin 
+      include/opentelemetry/std 
+      include/opentelemetry/trace
+      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+      FILES_MATCHING 
+      PATTERN "*.h")
 
-install(
-  DIRECTORY include/opentelemetry
-  DESTINATION include
-  FILES_MATCHING
-  PATTERN "*.h"
-  PATTERN "${LOGS_EXCLUDE_PATTERN}" EXCLUDE)
+if(WITH_HEADER_ONLY_API)
+    install(
+      DIRECTORY 
+      include/opentelemetry/baggage 
+      include/opentelemetry/common 
+      include/opentelemetry/context 
+      include/opentelemetry/detail 
+      include/opentelemetry/nostd 
+      include/opentelemetry/plugin 
+      include/opentelemetry/std 
+      include/opentelemetry/trace
+      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+      FILES_MATCHING
+      PATTERN "*.cc")
+ endif()
+
+if(WITH_METRICS_PREVIEW)
+    target_compile_definitions(opentelemetry_api INTERFACE ENABLE_METRICS_PREVIEW)
+    install(
+      DIRECTORY include/opentelemetry/metrics
+      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+      FILES_MATCHING PATTERN "*.h")
+endif()
+
+if(WITH_LOGS_PREVIEW)
+  target_compile_definitions(opentelemetry_api INTERFACE ENABLE_LOGS_PREVIEW)
+    install(
+      DIRECTORY include/opentelemetry/logs
+      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+      FILES_MATCHING PATTERN "*.h")
+endif()
 
 if(BUILD_TESTING)
   add_subdirectory(test)
 endif()
-
-target_compile_definitions(opentelemetry_api PUBLIC OTEL_EXPORT)
 
 if(WITH_ABSEIL)
   target_compile_definitions(opentelemetry_api INTERFACE HAVE_ABSEIL)
@@ -51,12 +102,12 @@ endif()
 
 if(WITH_STL)
   message("Building with standard library types...")
-  target_compile_definitions(opentelemetry_api PUBLIC HAVE_CPP_STDLIB
+  target_compile_definitions(opentelemetry_api INTERFACE HAVE_CPP_STDLIB
                                                          HAVE_GSL)
 else()
   message("Building with nostd types...")
 endif()
 
 if(CORE_RUNTIME_LIBS)
-  target_link_libraries(opentelemetry_api PUBLIC ${CORE_RUNTIME_LIBS})
+  target_link_libraries(opentelemetry_api INTERFACE ${CORE_RUNTIME_LIBS})
 endif()

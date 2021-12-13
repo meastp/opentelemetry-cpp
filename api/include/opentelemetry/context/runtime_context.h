@@ -306,3 +306,7 @@ static RuntimeContextStorage *GetDefaultStorage() noexcept
 }
 }  // namespace context
 OPENTELEMETRY_END_NAMESPACE
+
+#ifdef OTEL_WITH_HEADER_ONLY_API
+#  include "opentelemetry/context/runtime_context.cc"
+#endif  // OTEL_WITH_HEADER_ONLY_API

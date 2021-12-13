@@ -34,6 +34,8 @@ if(NOT DEFINED CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 11)
 endif()
 
+option(WITH_HEADER_ONLY_API "Build the opentelemetry API as header-only instead of a compiled library" ON)
+
 option(WITH_STL "Whether to use Standard Library for C++latest features" OFF)
 
 option(WITH_ABSEIL "Whether to use Abseil for C++latest features" OFF)

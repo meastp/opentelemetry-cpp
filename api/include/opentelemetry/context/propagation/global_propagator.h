@@ -46,3 +46,7 @@ private:
 }  // namespace propagation
 }  // namespace context
 OPENTELEMETRY_END_NAMESPACE
+
+#ifdef OTEL_WITH_HEADER_ONLY_API
+#  include "opentelemetry/context/propagation/global_propagator.cc"
+#endif  // OTEL_WITH_HEADER_ONLY_API

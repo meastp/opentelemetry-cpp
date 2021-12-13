@@ -314,3 +314,7 @@ private:
 };
 }  // namespace trace
 OPENTELEMETRY_END_NAMESPACE
+
+#ifdef OTEL_WITH_HEADER_ONLY_API
+#  include "opentelemetry/trace/trace_state.cc"
+#endif  // OTEL_WITH_HEADER_ONLY_API
