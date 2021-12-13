@@ -85,7 +85,13 @@
         },
         {
           "name": "BUILD_SHARED_LIBS",
-          "value": "TRUE"
+          "value": "TRUE",
+          "type": "STRING"
+        },
+        {
+          "name": "WITH_HEADER_ONLY_API",
+          "value": "False",
+          "type": "BOOL"
         }
       ]
     },

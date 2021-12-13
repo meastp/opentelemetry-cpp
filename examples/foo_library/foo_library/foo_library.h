@@ -7,7 +7,11 @@
 #  ifdef FOO_LIBRARY_EXPORT
 #    define FOO_LIBRARY_API __declspec(dllexport)
 #  else
-#    define FOO_LIBRARY_API __declspec(dllimport)
+#    ifdef FOO_LIBRARY_STATIC
+#      define FOO_LIBRARY_API
+#    else
+#      define FOO_LIBRARY_API __declspec(dllimport)
+#    endif  // FOO_LIBRARY_STATIC
 #  endif
 #else
 #  define FOO_LIBRARY_API
