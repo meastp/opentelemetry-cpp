@@ -4,6 +4,7 @@
 #pragma once
 #ifndef ENABLE_METRICS_PREVIEW
 #  include <chrono>
+#  include "opentelemetry/sdk_export.h"
 #  include "opentelemetry/version.h"
 
 OPENTELEMETRY_BEGIN_NAMESPACE
@@ -14,7 +15,7 @@ namespace metrics
 /**
  * MetricReader defines the interface to collect metrics from SDK
  */
-class MetricReader
+class OTEL_SDK_API MetricReader
 {
 public:
   virtual ~MetricReader() = default;

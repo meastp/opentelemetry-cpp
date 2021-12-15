@@ -10,7 +10,7 @@
 #ifdef BAZEL_BUILD
 #  include "examples/common/foo_library/foo_library.h"
 #else
-#  include "foo_library/foo_library.h"
+#  include "foo_library.h"
 #endif
 #include "opentelemetry/exporters/memory/in_memory_span_exporter.h"
 #include "opentelemetry/exporters/ostream/span_exporter.h"

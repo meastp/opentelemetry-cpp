@@ -12,11 +12,12 @@ if(WITH_HEADER_ONLY_API)
     endif()
 else()
     add_library(opentelemetry_api 
-        include/opentelemetry/baggage/propagation/baggage_propagator.cc 
         include/opentelemetry/baggage/baggage.cc 
+        include/opentelemetry/baggage/baggage_context.cc 
         include/opentelemetry/common/kv_properties.cc 
         include/opentelemetry/context/propagation/global_propagator.cc
         include/opentelemetry/context/runtime_context.cc 
+        include/opentelemetry/metrics/provider.cc 
         include/opentelemetry/trace/noop.cc 
         include/opentelemetry/trace/provider.cc 
         include/opentelemetry/trace/trace_state.cc)
@@ -67,6 +68,7 @@ if(WITH_HEADER_ONLY_API)
       include/opentelemetry/common 
       include/opentelemetry/context 
       include/opentelemetry/detail 
+      include/opentelemetry/metrics 
       include/opentelemetry/nostd 
       include/opentelemetry/plugin 
       include/opentelemetry/std 
@@ -79,7 +81,7 @@ if(WITH_HEADER_ONLY_API)
 if(WITH_METRICS_PREVIEW)
     target_compile_definitions(opentelemetry_api INTERFACE ENABLE_METRICS_PREVIEW)
     install(
-      DIRECTORY include/opentelemetry/metrics
+      DIRECTORY include/opentelemetry/_metrics
       DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
       FILES_MATCHING PATTERN "*.h")
 endif()

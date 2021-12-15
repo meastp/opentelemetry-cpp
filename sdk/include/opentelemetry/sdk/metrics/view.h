@@ -3,6 +3,7 @@
 
 #pragma once
 #ifndef ENABLE_METRICS_PREVIEW
+#  include "opentelemetry/sdk_export.h"
 #  include "opentelemetry/version.h"
 
 OPENTELEMETRY_BEGIN_NAMESPACE
@@ -15,7 +16,7 @@ namespace metrics
  * customize the metrics before exported.
  */
 
-class View
+class OTEL_SDK_API View
 {
 public:
   virtual ~View() = default;

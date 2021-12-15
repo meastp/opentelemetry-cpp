@@ -4,6 +4,7 @@
 #pragma once
 #ifndef ENABLE_METRICS_PREVIEW
 
+#  include "opentelemetry/export.h"
 #  include "opentelemetry/metrics/meter.h"
 #  include "opentelemetry/nostd/shared_ptr.h"
 #  include "opentelemetry/nostd/string_view.h"
@@ -14,7 +15,7 @@ namespace metrics
 /**
  * Creates new Meter instances.
  */
-class MeterProvider
+class OTEL_API MeterProvider
 {
 public:
   virtual ~MeterProvider() = default;

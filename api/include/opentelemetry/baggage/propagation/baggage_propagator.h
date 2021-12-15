@@ -15,7 +15,7 @@ namespace baggage
 namespace propagation
 {
 
-class BaggagePropagator : public opentelemetry::context::propagation::TextMapPropagator
+class OTEL_API BaggagePropagator : public opentelemetry::context::propagation::TextMapPropagator
 {
 public:
   void Inject(opentelemetry::context::propagation::TextMapCarrier &carrier,
@@ -27,21 +27,17 @@ public:
 
   context::Context Extract(const opentelemetry::context::propagation::TextMapCarrier &carrier,
                            opentelemetry::context::Context &context) noexcept override
-{
+  {
     nostd::string_view baggage_str = carrier.Get(opentelemetry::baggage::kBaggageHeader);
     auto baggage                   = opentelemetry::baggage::Baggage::FromHeader(baggage_str);
     return opentelemetry::baggage::SetBaggage(context, baggage);
-}
+  }
 
   bool Fields(nostd::function_ref<bool(nostd::string_view)> callback) const noexcept override
-{
+  {
     return callback(kBaggageHeader);
   }
 };
 }  // namespace propagation
 }  // namespace baggage
 OPENTELEMETRY_END_NAMESPACE
-
-#ifdef OTEL_WITH_HEADER_ONLY_API
-#  include "opentelemetry/baggage/propagation/baggage_propagator.cc"
-#endif  // OTEL_WITH_HEADER_ONLY_API

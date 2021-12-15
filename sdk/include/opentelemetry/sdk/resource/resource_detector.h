@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include "opentelemetry/export.h"
 #include "opentelemetry/nostd/unique_ptr.h"
+#include "opentelemetry/sdk_export.h"
 #include "opentelemetry/version.h"
 
 OPENTELEMETRY_BEGIN_NAMESPACE
@@ -18,7 +18,7 @@ class Resource;
 /**
  * Interface for a Resource Detector
  */
-class OTEL_API ResourceDetector
+class OTEL_SDK_API ResourceDetector
 {
 public:
   virtual Resource Detect() = 0;
@@ -28,7 +28,7 @@ public:
  * OTelResourceDetector to detect the presence of and create a Resource
  * from the OTEL_RESOURCE_ATTRIBUTES environment variable.
  */
-class OTEL_API OTELResourceDetector : public ResourceDetector
+class OTEL_SDK_API OTELResourceDetector : public ResourceDetector
 {
 public:
   Resource Detect() noexcept override;

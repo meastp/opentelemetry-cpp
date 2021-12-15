@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 #pragma once
-#include "opentelemetry/export.h"
 #include "opentelemetry/sdk/trace/id_generator.h"
+#include "opentelemetry/sdk_export.h"
 
 OPENTELEMETRY_BEGIN_NAMESPACE
 namespace sdk
@@ -11,7 +11,7 @@ namespace sdk
 namespace trace
 {
 
-class OTEL_API RandomIdGenerator : public IdGenerator
+class OTEL_SDK_API RandomIdGenerator : public IdGenerator
 {
 public:
   opentelemetry::trace::SpanId GenerateSpanId() noexcept override;

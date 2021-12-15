@@ -17,7 +17,7 @@ namespace metrics
 /**
  * Stores the singleton global MeterProvider.
  */
-class Provider
+class OTEL_API Provider
 {
 public:
   /**
@@ -42,19 +42,15 @@ public:
   }
 
 private:
-  static nostd::shared_ptr<MeterProvider> &GetProvider() noexcept
-  {
-    static nostd::shared_ptr<MeterProvider> provider(new NoopMeterProvider);
-    return provider;
-  }
+  static nostd::shared_ptr<MeterProvider> &GetProvider() noexcept;
 
-  static common::SpinLockMutex &GetLock() noexcept
-  {
-    static common::SpinLockMutex lock;
-    return lock;
-  }
+  static common::SpinLockMutex &GetLock() noexcept;
 };
 
 }  // namespace metrics
 OPENTELEMETRY_END_NAMESPACE
+
+#  ifdef OTEL_WITH_HEADER_ONLY_API
+#    include "opentelemetry/metrics/provider.cc"
+#  endif  // OTEL_WITH_HEADER_ONLY_API
 #endif

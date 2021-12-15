@@ -106,7 +106,7 @@ public:
 /**
  * No-op implementation of Meter.
  */
-class NoopMeter final : public Meter
+class OTEL_API NoopMeter final : public Meter
 {
 public:
   nostd::shared_ptr<Counter<long>> CreateLongCounter(nostd::string_view name,
@@ -222,7 +222,7 @@ public:
 /**
  * No-op implementation of a MeterProvider.
  */
-class NoopMeterProvider final : public MeterProvider
+class OTEL_API NoopMeterProvider final : public MeterProvider
 {
 public:
   NoopMeterProvider() : meter_{nostd::shared_ptr<Meter>(new NoopMeter)} {}

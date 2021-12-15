@@ -6,6 +6,7 @@
 
 #  include <iostream>
 #  include <string>
+#  include "opentelemetry/export.h"
 #  include "opentelemetry/sdk/_metrics/aggregator/exact_aggregator.h"
 #  include "opentelemetry/sdk/_metrics/aggregator/gauge_aggregator.h"
 #  include "opentelemetry/sdk/_metrics/aggregator/histogram_aggregator.h"
@@ -21,7 +22,7 @@ namespace metrics
 /**
  * The OStreamMetricsExporter exports record data through an ostream
  */
-class OStreamMetricsExporter final : public opentelemetry::sdk::metrics::MetricsExporter
+class OTEL_API OStreamMetricsExporter final : public opentelemetry::sdk::metrics::MetricsExporter
 {
 public:
   /**

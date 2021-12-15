@@ -4,6 +4,7 @@
 #pragma once
 #ifndef ENABLE_METRICS_PREVIEW
 
+#  include "opentelemetry/export.h"
 #  include "opentelemetry/metrics/async_instruments.h"
 #  include "opentelemetry/metrics/sync_instruments.h"
 #  include "opentelemetry/nostd/shared_ptr.h"
@@ -22,7 +23,7 @@ namespace metrics
  * measurements from all instruments.
  *
  */
-class Meter
+class OTEL_API Meter
 {
 public:
   virtual ~Meter() = default;

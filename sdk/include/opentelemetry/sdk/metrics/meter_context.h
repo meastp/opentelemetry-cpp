@@ -10,6 +10,7 @@
 #  include "opentelemetry/sdk/metrics/metric_reader.h"
 #  include "opentelemetry/sdk/metrics/view.h"
 #  include "opentelemetry/sdk/resource/resource.h"
+#  include "opentelemetry/sdk_export.h"
 #  include "opentelemetry/version.h"
 
 OPENTELEMETRY_BEGIN_NAMESPACE
@@ -21,7 +22,7 @@ namespace metrics
  * A class which stores the MeterProvider context.
 
  */
-class MeterContext
+class OTEL_SDK_API MeterContext
 {
 public:
   /**
@@ -36,6 +37,9 @@ public:
                std::vector<std::unique_ptr<View>> &&views,
                opentelemetry::sdk::resource::Resource resource =
                    opentelemetry::sdk::resource::Resource::Create({})) noexcept;
+
+  MeterContext(const MeterContext &) = delete;
+  MeterContext &operator=(const MeterContext &) = delete;
 
   /**
    * Obtain the resource associated with this meter context.

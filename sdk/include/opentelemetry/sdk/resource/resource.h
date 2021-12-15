@@ -6,10 +6,10 @@
 #include "opentelemetry/common/attribute_value.h"
 #include "opentelemetry/common/key_value_iterable_view.h"
 
-#include "opentelemetry/export.h"
 #include "opentelemetry/sdk/common/attribute_utils.h"
 #include "opentelemetry/sdk/resource/resource_detector.h"
 #include "opentelemetry/sdk/version/version.h"
+#include "opentelemetry/sdk_export.h"
 #include "opentelemetry/version.h"
 
 #include <memory>
@@ -24,7 +24,7 @@ namespace resource
 
 using ResourceAttributes = opentelemetry::sdk::common::AttributeMap;
 
-class OTEL_API Resource
+class OTEL_SDK_API Resource
 {
 public:
   Resource(const Resource &) = default;

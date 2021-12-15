@@ -5,6 +5,8 @@ set_target_properties(opentelemetry_logs PROPERTIES EXPORT_NAME logs)
 
 target_link_libraries(opentelemetry_logs opentelemetry_common)
 
+target_compile_definitions(opentelemetry_logs PUBLIC OTEL_SDK_EXPORT)
+
 target_include_directories(
   opentelemetry_logs
   PUBLIC "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/sdk/include>")

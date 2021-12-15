@@ -3,9 +3,9 @@
 
 #pragma once
 
-#include "opentelemetry/export.h"
 #include "opentelemetry/sdk/common/atomic_shared_ptr.h"
 #include "opentelemetry/sdk/trace/sampler.h"
+#include "opentelemetry/sdk_export.h"
 
 OPENTELEMETRY_BEGIN_NAMESPACE
 namespace sdk
@@ -16,7 +16,7 @@ namespace trace
  * The ParentBased sampler is a composite sampler. ParentBased(delegateSampler) either respects
  * the parent span's sampling decision or delegates to delegateSampler for root spans.
  */
-class OTEL_API ParentBasedSampler : public Sampler
+class OTEL_SDK_API ParentBasedSampler : public Sampler
 {
 public:
   explicit ParentBasedSampler(std::shared_ptr<Sampler> delegate_sampler) noexcept;

@@ -8,7 +8,7 @@ endif()
 add_library(opentelemetry_common ${COMMON_SRCS})
 
 set_target_properties(opentelemetry_common PROPERTIES EXPORT_NAME common)
-target_compile_definitions(opentelemetry_common PUBLIC OTEL_EXPORT)
+target_compile_definitions(opentelemetry_common PUBLIC OTEL_SDK_EXPORT)
 
 target_link_libraries(
   opentelemetry_common PUBLIC opentelemetry_api opentelemetry_sdk

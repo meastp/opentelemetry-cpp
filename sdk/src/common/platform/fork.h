@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "opentelemetry/export.h"
+#include "opentelemetry/sdk_export.h"
 #include "opentelemetry/version.h"
 
 OPENTELEMETRY_BEGIN_NAMESPACE
@@ -18,7 +18,7 @@ namespace platform
  * See
  * https://pubs.opengroup.org/onlinepubs/009695399/functions/pthread_atfork.html
  */
-OTEL_API int AtFork(void (*prepare)(), void (*parent)(), void (*child)()) noexcept;
+OTEL_SDK_API int AtFork(void (*prepare)(), void (*parent)(), void (*child)()) noexcept;
 }  // namespace platform
 }  // namespace common
 }  // namespace sdk

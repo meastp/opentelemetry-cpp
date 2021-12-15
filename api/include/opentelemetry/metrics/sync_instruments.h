@@ -6,6 +6,7 @@
 
 #  include "opentelemetry/common/attribute_value.h"
 #  include "opentelemetry/common/key_value_iterable_view.h"
+#  include "opentelemetry/export.h"
 #  include "opentelemetry/nostd/span.h"
 #  include "opentelemetry/nostd/string_view.h"
 
@@ -13,7 +14,7 @@ OPENTELEMETRY_BEGIN_NAMESPACE
 namespace metrics
 {
 
-class SynchronousInstrument
+class OTEL_API SynchronousInstrument
 {};
 
 template <class T>

@@ -11,6 +11,7 @@
 #  include "opentelemetry/sdk/metrics/meter.h"
 #  include "opentelemetry/sdk/metrics/meter_context.h"
 #  include "opentelemetry/sdk/resource/resource.h"
+#  include "opentelemetry/sdk_export.h"
 #  include "opentelemetry/version.h"
 
 OPENTELEMETRY_BEGIN_NAMESPACE
@@ -18,7 +19,7 @@ namespace sdk
 {
 namespace metrics
 {
-class MeterProvider final : public opentelemetry::metrics::MeterProvider
+class OTEL_SDK_API MeterProvider final : public opentelemetry::metrics::MeterProvider
 {
 public:
   /**

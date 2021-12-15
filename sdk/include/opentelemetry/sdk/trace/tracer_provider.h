@@ -9,13 +9,13 @@
 #include <string>
 #include <vector>
 
-#include "opentelemetry/export.h"
 #include "opentelemetry/nostd/shared_ptr.h"
 #include "opentelemetry/sdk/resource/resource.h"
 #include "opentelemetry/sdk/trace/processor.h"
 #include "opentelemetry/sdk/trace/samplers/always_on.h"
 #include "opentelemetry/sdk/trace/tracer.h"
 #include "opentelemetry/sdk/trace/tracer_context.h"
+#include "opentelemetry/sdk_export.h"
 #include "opentelemetry/trace/tracer_provider.h"
 
 OPENTELEMETRY_BEGIN_NAMESPACE
@@ -23,7 +23,7 @@ namespace sdk
 {
 namespace trace
 {
-class OTEL_API TracerProvider final : public opentelemetry::trace::TracerProvider
+class OTEL_SDK_API TracerProvider final : public opentelemetry::trace::TracerProvider
 {
 public:
   /**

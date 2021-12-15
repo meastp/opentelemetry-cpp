@@ -3,6 +3,7 @@
 
 #pragma once
 #ifndef ENABLE_METRICS_PREVIEW
+#  include "opentelemetry/export.h"
 #  include "opentelemetry/version.h"
 
 OPENTELEMETRY_BEGIN_NAMESPACE
@@ -10,7 +11,7 @@ namespace sdk
 {
 namespace metrics
 {
-class Recordable
+class OTEL_API Recordable
 {
 public:
   virtual ~Recordable() = default;

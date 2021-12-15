@@ -6,6 +6,7 @@
 #  include <chrono>
 #  include "opentelemetry/sdk/common/exporter_utils.h"
 #  include "opentelemetry/sdk/metrics/recordable.h"
+#  include "opentelemetry/sdk_export.h"
 #  include "opentelemetry/version.h"
 
 OPENTELEMETRY_BEGIN_NAMESPACE
@@ -17,7 +18,7 @@ namespace metrics
  * MetricExporter defines the interface to be used by metrics libraries to
  *  push metrics data to the OpenTelemetry exporters.
  */
-class MetricExporter
+class OTEL_SDK_API MetricExporter
 {
 public:
   virtual ~MetricExporter() = default;
