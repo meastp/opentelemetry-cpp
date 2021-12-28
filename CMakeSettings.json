@@ -85,7 +85,7 @@
         },
         {
           "name": "BUILD_SHARED_LIBS",
-          "value": "TRUE",
+          "value": "FALSE",
           "type": "STRING"
         },
         {
