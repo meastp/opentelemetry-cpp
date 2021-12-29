@@ -44,7 +44,7 @@ install(
   include/opentelemetry/config.h 
   include/opentelemetry/export.h 
   include/opentelemetry/version.h
-  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/opentelemetry)
 
 
 install(
@@ -57,7 +57,7 @@ install(
       include/opentelemetry/plugin 
       include/opentelemetry/std 
       include/opentelemetry/trace
-      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/opentelemetry
       FILES_MATCHING 
       PATTERN "*.h")
 
@@ -73,7 +73,7 @@ if(WITH_HEADER_ONLY_API)
       include/opentelemetry/plugin 
       include/opentelemetry/std 
       include/opentelemetry/trace
-      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/opentelemetry
       FILES_MATCHING
       PATTERN "*.cc")
  endif()
@@ -82,7 +82,7 @@ if(WITH_METRICS_PREVIEW)
     target_compile_definitions(opentelemetry_api INTERFACE ENABLE_METRICS_PREVIEW)
     install(
       DIRECTORY include/opentelemetry/_metrics
-      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/opentelemetry
       FILES_MATCHING PATTERN "*.h")
 endif()
 
@@ -90,7 +90,7 @@ if(WITH_LOGS_PREVIEW)
   target_compile_definitions(opentelemetry_api INTERFACE ENABLE_LOGS_PREVIEW)
     install(
       DIRECTORY include/opentelemetry/logs
-      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/opentelemetry
       FILES_MATCHING PATTERN "*.h")
 endif()
 
