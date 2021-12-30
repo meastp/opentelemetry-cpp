@@ -12,6 +12,12 @@ install(
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+  
+install(
+  FILES 
+#  include/opentelemetry/sdk_config.h
+  include/opentelemetry/sdk_export.h
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/opentelemetry)
 
 set(LOGS_EXCLUDE_PATTERN "")
 if(NOT WITH_LOGS_PREVIEW)

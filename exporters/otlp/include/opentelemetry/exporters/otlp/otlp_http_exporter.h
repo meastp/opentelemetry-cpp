@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include "opentelemetry/export.h"
+
 // We need include exporter.h first, which will include Windows.h with NOMINMAX on Windows
 #include "opentelemetry/sdk/trace/exporter.h"
 
@@ -55,7 +57,7 @@ struct OtlpHttpExporterOptions
 /**
  * The OTLP exporter exports span data in OpenTelemetry Protocol (OTLP) format.
  */
-class OtlpHttpExporter final : public opentelemetry::sdk::trace::SpanExporter
+class OTEL_API OtlpHttpExporter final : public opentelemetry::sdk::trace::SpanExporter
 {
 public:
   /**

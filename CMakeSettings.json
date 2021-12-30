@@ -65,7 +65,7 @@
         },
         {
           "name": "WITH_OTLP",
-          "value": "False",
+          "value": "True",
           "type": "BOOL"
         },
         {
@@ -85,7 +85,7 @@
         },
         {
           "name": "BUILD_SHARED_LIBS",
-          "value": "FALSE",
+          "value": "TRUE",
           "type": "STRING"
         },
         {

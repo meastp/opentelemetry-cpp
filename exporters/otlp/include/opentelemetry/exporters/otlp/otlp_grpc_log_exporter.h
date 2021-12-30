@@ -4,6 +4,8 @@
 #pragma once
 #ifdef ENABLE_LOGS_PREVIEW
 
+#  include "opentelemetry/export.h"
+
 // clang-format off
 
 #  include "opentelemetry/exporters/otlp/protobuf_include_prefix.h"
@@ -25,7 +27,7 @@ namespace otlp
 /**
  * The OTLP exporter exports log data in OpenTelemetry Protocol (OTLP) format in gRPC.
  */
-class OtlpGrpcLogExporter : public opentelemetry::sdk::logs::LogExporter
+class OTEL_API OtlpGrpcLogExporter : public opentelemetry::sdk::logs::LogExporter
 {
 public:
   /**

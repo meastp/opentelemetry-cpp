@@ -4,6 +4,8 @@
 #pragma once
 #ifdef ENABLE_LOGS_PREVIEW
 
+#  include "opentelemetry/export.h"
+
 #  include "opentelemetry/sdk/logs/exporter.h"
 
 #  include "opentelemetry/exporters/otlp/otlp_http_client.h"
@@ -55,7 +57,7 @@ struct OtlpHttpLogExporterOptions
 /**
  * The OTLP exporter exports log data in OpenTelemetry Protocol (OTLP) format.
  */
-class OtlpHttpLogExporter final : public opentelemetry::sdk::logs::LogExporter
+class OTEL_API OtlpHttpLogExporter final : public opentelemetry::sdk::logs::LogExporter
 {
 public:
   /**

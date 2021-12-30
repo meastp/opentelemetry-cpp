@@ -5,6 +5,8 @@
 
 #include <chrono>
 
+#include "opentelemetry/export.h"
+
 #include "opentelemetry/exporters/otlp/protobuf_include_prefix.h"
 
 #include "opentelemetry/proto/collector/trace/v1/trace_service.grpc.pb.h"
@@ -25,7 +27,7 @@ namespace otlp
 /**
  * The OTLP exporter exports span data in OpenTelemetry Protocol (OTLP) format.
  */
-class OtlpGrpcExporter final : public opentelemetry::sdk::trace::SpanExporter
+class OTEL_API OtlpGrpcExporter final : public opentelemetry::sdk::trace::SpanExporter
 {
 public:
   /**

@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include "opentelemetry/export.h"
+
 #include "opentelemetry/exporters/otlp/protobuf_include_prefix.h"
 
 #include "opentelemetry/proto/collector/logs/v1/logs_service.pb.h"
@@ -33,7 +35,7 @@ namespace otlp
 /**
  * The OtlpRecordableUtils contains utility functions for OTLP recordable
  */
-class OtlpRecordableUtils
+class OTEL_API OtlpRecordableUtils
 {
 public:
   static void PopulateAttribute(opentelemetry::proto::common::v1::KeyValue *attribute,

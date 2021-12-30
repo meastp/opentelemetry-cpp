@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include "opentelemetry/export.h"
+
 #include "opentelemetry/exporters/otlp/protobuf_include_prefix.h"
 
 #include "opentelemetry/proto/resource/v1/resource.pb.h"
@@ -18,7 +20,7 @@ namespace exporter
 {
 namespace otlp
 {
-class OtlpRecordable final : public opentelemetry::sdk::trace::Recordable
+class OTEL_API OtlpRecordable final : public opentelemetry::sdk::trace::Recordable
 {
 public:
   proto::trace::v1::Span &span() noexcept { return span_; }

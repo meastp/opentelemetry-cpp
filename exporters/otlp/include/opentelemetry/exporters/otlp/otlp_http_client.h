@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include "opentelemetry/export.h"
+
 #include "opentelemetry/exporters/otlp/protobuf_include_prefix.h"
 
 #include "google/protobuf/message.h"
@@ -90,7 +92,7 @@ struct OtlpHttpClientOptions
 /**
  * The OTLP HTTP client exports span data in OpenTelemetry Protocol (OTLP) format.
  */
-class OtlpHttpClient
+class OTEL_API OtlpHttpClient
 {
 public:
   /**

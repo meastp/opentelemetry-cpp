@@ -4,6 +4,8 @@
 #pragma once
 #ifdef ENABLE_LOGS_PREVIEW
 
+#  include "opentelemetry/export.h"
+
 // clang-format off
 #  include "opentelemetry/exporters/otlp/protobuf_include_prefix.h"
 
@@ -25,7 +27,7 @@ namespace otlp
 /**
  * An OTLP Recordable implemenation for Logs.
  */
-class OtlpLogRecordable final : public opentelemetry::sdk::logs::Recordable
+class OTEL_API OtlpLogRecordable final : public opentelemetry::sdk::logs::Recordable
 {
 public:
   virtual ~OtlpLogRecordable() = default;

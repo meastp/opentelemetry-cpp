@@ -274,7 +274,6 @@ if((NOT WITH_API_ONLY)
    OR WITH_ELASTICSEARCH
    OR WITH_ZIPKIN
    OR WITH_OTLP
-   OR WITH_OTLP_HTTP
    OR WITH_ZPAGES
    OR BUILD_W3CTRACECONTEXT_TEST
    OR WITH_ETW)
@@ -326,9 +325,7 @@ endif()
 if(WITH_OTLP)
   set(protobuf_MODULE_COMPATIBLE ON)
   find_package(Protobuf)
-  if(WITH_OTLP_GRPC)
   find_package(gRPC)
-  endif()
   if((NOT Protobuf_FOUND AND NOT PROTOBUF_FOUND) OR (NOT gRPC_FOUND))
     #if(WIN32 AND (NOT DEFINED CMAKE_TOOLCHAIN_FILE))
     #  install_windows_deps()
@@ -344,7 +341,7 @@ if(WITH_OTLP)
     if(NOT Protobuf_FOUND AND NOT PROTOBUF_FOUND)
       find_package(Protobuf REQUIRED)
     endif()
-    if(WITH_OTLP_GRPC AND NOT gRPC_FOUND)
+    if(NOT gRPC_FOUND)
       find_package(gRPC)
     endif()
     if(WIN32)
