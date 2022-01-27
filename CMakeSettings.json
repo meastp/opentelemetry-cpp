@@ -92,6 +92,16 @@
           "name": "WITH_HEADER_ONLY_API",
           "value": "False",
           "type": "BOOL"
+        },
+        {
+          "name": "VCPKG_TARGET_TRIPLET",
+          "value": "x64-windows-v142",
+          "type": "STRING"
+        },
+        {
+          "name": "VCPKG_OVERLAY_TRIPLETS",
+          "value": "C:\\Users\\mattar\\Source\\Repos\\opentelemetry-cpp\\tools\\triplets",
+          "type": "STRING"
         }
       ]
     },

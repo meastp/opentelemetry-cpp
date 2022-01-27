@@ -121,11 +121,18 @@ foreach(IMPORT_DIR ${PROTOBUF_IMPORT_DIRS})
 endforeach()
 
 if(WITH_OTLP_GRPC)
-if(CMAKE_CROSSCOMPILING)
-    find_program(gRPC_CPP_PLUGIN_EXECUTABLE grpc_cpp_plugin)
-else()
-    set(gRPC_CPP_PLUGIN_EXECUTABLE $<TARGET_FILE:gRPC::grpc_cpp_plugin>)
-endif()
+  if(CMAKE_CROSSCOMPILING)
+        find_program(gRPC_CPP_PLUGIN_EXECUTABLE grpc_cpp_plugin)
+  else()
+    if(TARGET gRPC::grpc_cpp_plugin)
+      project_build_tools_get_imported_location(gRPC_CPP_PLUGIN_EXECUTABLE
+                                                gRPC::grpc_cpp_plugin)
+    message("here gRPC_CPP_PLUGIN_EXECUTABLE=${gRPC_CPP_PLUGIN_EXECUTABLE}")
+    else()
+      find_program(gRPC_CPP_PLUGIN_EXECUTABLE grpc_cpp_plugin)
+    endif()
+  endif()
+  message(STATUS "gRPC_CPP_PLUGIN_EXECUTABLE=${gRPC_CPP_PLUGIN_EXECUTABLE}")
 endif()
 
 if(WITH_OTLP_GRPC)
@@ -159,6 +166,8 @@ add_custom_command(
     --plugin=protoc-gen-grpc="${gRPC_CPP_PLUGIN_EXECUTABLE}" ${COMMON_PROTO}
     ${RESOURCE_PROTO} ${TRACE_PROTO} ${LOGS_PROTO} ${METRICS_PROTO}
     ${TRACE_SERVICE_PROTO} ${LOGS_SERVICE_PROTO} ${METRICS_SERVICE_PROTO})
+    
+  message("WITH_OTLP_GRPC ${PROTOBUF_PROTOC_EXECUTABLE} --proto_path=${PROTO_PATH} ${PROTOBUF_INCLUDE_FLAGS} --cpp_out=${GENERATED_PROTOBUF_PATH} --grpc_out=generate_mock_code=true:${GENERATED_PROTOBUF_PATH} --plugin=protoc-gen-grpc=${gRPC_CPP_PLUGIN_EXECUTABLE} ${COMMON_PROTO} ${RESOURCE_PROTO} ${TRACE_PROTO} ${LOGS_PROTO} ${METRICS_PROTO} ${TRACE_SERVICE_PROTO} ${LOGS_SERVICE_PROTO} ${METRICS_SERVICE_PROTO}")
 else()
 add_custom_command(
   OUTPUT ${COMMON_PB_H_FILE}
