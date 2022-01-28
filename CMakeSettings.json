@@ -17,9 +17,54 @@
           "type": "BOOL"
         },
         {
+          "name": "WITH_OTLP_GRPC",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
           "name": "WITH_EXAMPLES",
           "value": "true",
           "type": "BOOL"
+        },
+        {
+          "name": "WITH_PROMETHEUS",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "VCPKG_MANIFEST_MODE",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "BUILD_SHARED_LIBS",
+          "value": "TRUE",
+          "type": "STRING"
+        },
+        {
+          "name": "WITH_HEADER_ONLY_API",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "VCPKG_TARGET_TRIPLET",
+          "value": "x64-windows-v142",
+          "type": "STRING"
+        },
+        {
+          "name": "VCPKG_HOST_TRIPLET",
+          "value": "x64-windows-v142",
+          "type": "STRING"
+        },
+        {
+          "name": "VCPKG_OVERLAY_TRIPLETS",
+          "value": "C:\\Users\\mattar\\Source\\Repos\\opentelemetry-cpp\\tools\\triplets",
+          "type": "STRING"
+        },
+        {
+          "name": "VCPKG_OVERLAY_PORTS",
+          "value": "C:\\Users\\mattar\\Source\\Repos\\opentelemetry-cpp\\tools\\ports",
+          "type": "STRING"
         }
       ]
     },
@@ -69,6 +114,11 @@
           "type": "BOOL"
         },
         {
+          "name": "WITH_OTLP_GRPC",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
           "name": "WITH_EXAMPLES",
           "value": "true",
           "type": "BOOL"
@@ -99,8 +149,18 @@
           "type": "STRING"
         },
         {
+          "name": "VCPKG_HOST_TRIPLET",
+          "value": "x64-windows-v142",
+          "type": "STRING"
+        },
+        {
           "name": "VCPKG_OVERLAY_TRIPLETS",
           "value": "C:\\Users\\mattar\\Source\\Repos\\opentelemetry-cpp\\tools\\triplets",
+          "type": "STRING"
+        },
+        {
+          "name": "VCPKG_OVERLAY_PORTS",
+          "value": "C:\\Users\\mattar\\Source\\Repos\\opentelemetry-cpp\\tools\\ports",
           "type": "STRING"
         }
       ]
