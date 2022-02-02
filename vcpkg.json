@@ -15,8 +15,6 @@
     "ms-gsl",
     "abseil",
     "grpc",
-    "prometheus-cpp",
-    "thrift",
     "benchmark",
     "protobuf",
     {
