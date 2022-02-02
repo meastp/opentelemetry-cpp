@@ -23,8 +23,8 @@ namespace otlp
 class OTEL_API OtlpRecordable final : public opentelemetry::sdk::trace::Recordable
 {
 public:
-  proto::trace::v1::Span &span() noexcept { return *span_; }
-  const proto::trace::v1::Span &span() const noexcept { return *span_; }
+  proto::trace::v1::Span &span() noexcept { return span_; }
+  const proto::trace::v1::Span &span() const noexcept { return span_; }
 
   /** Dynamically converts the resource of this span into a proto. */
   proto::resource::v1::Resource ProtoResource() const noexcept;
@@ -63,16 +63,8 @@ public:
       const opentelemetry::sdk::instrumentationlibrary::InstrumentationLibrary
           &instrumentation_library) noexcept override;
 
-  OtlpRecordable();
-  ~OtlpRecordable();
-
-  OtlpRecordable(const OtlpRecordable &) = delete;
-  OtlpRecordable &operator=(const OtlpRecordable &) = delete;
-  OtlpRecordable(OtlpRecordable &&);
-  OtlpRecordable &operator=(OtlpRecordable &&);
-
 private:
-  proto::trace::v1::Span *span_                           = nullptr;
+  proto::trace::v1::Span span_;
   const opentelemetry::sdk::resource::Resource *resource_ = nullptr;
   const opentelemetry::sdk::instrumentationlibrary::InstrumentationLibrary
       *instrumentation_library_ = nullptr;

@@ -12,45 +12,24 @@ namespace exporter
 {
 namespace otlp
 {
-OtlpRecordable::OtlpRecordable() : span_(new proto::trace::v1::Span) {}
-OtlpRecordable::~OtlpRecordable()
-{
-  delete span_;
-}
-
-OtlpRecordable::OtlpRecordable(OtlpRecordable &&other)
-{
-  span_->CopyFrom(*other.span_);
-  other.span_->Clear();
-}
-OtlpRecordable &OtlpRecordable::operator=(OtlpRecordable &&other)
-{
-  if (this != &other)
-  {
-    span_->CopyFrom(*other.span_);
-    other.span_->Clear();
-  }
-
-  return *this;
-}
 
 void OtlpRecordable::SetIdentity(const opentelemetry::trace::SpanContext &span_context,
                                  opentelemetry::trace::SpanId parent_span_id) noexcept
 {
-  span_->set_trace_id(reinterpret_cast<const char *>(span_context.trace_id().Id().data()),
-                      trace::TraceId::kSize);
-  std::cout << "all: " << span_->DebugString();
-  span_->set_span_id(reinterpret_cast<const char *>(span_context.span_id().Id().data()),
-                     trace::SpanId::kSize);
-  std::cout << "all: " << span_->DebugString();
+  span_.set_trace_id(reinterpret_cast<const char *>(span_context.trace_id().Id().data()),
+                     trace::TraceId::kSize);
+  std::cout << "all: " << span_.DebugString();
+  span_.set_span_id(reinterpret_cast<const char *>(span_context.span_id().Id().data()),
+                    trace::SpanId::kSize);
+  std::cout << "all: " << span_.DebugString();
   if (parent_span_id.IsValid())
   {
-    span_->set_parent_span_id(reinterpret_cast<const char *>(parent_span_id.Id().data()),
-                              trace::SpanId::kSize);
+    span_.set_parent_span_id(reinterpret_cast<const char *>(parent_span_id.Id().data()),
+                             trace::SpanId::kSize);
   }
-  std::cout << "all: " << span_->DebugString();
-  span_->set_trace_state(span_context.trace_state()->ToHeader());
-  std::cout << "all: " << span_->DebugString();
+  std::cout << "all: " << span_.DebugString();
+  span_.set_trace_state(span_context.trace_state()->ToHeader());
+  std::cout << "all: " << span_.DebugString();
 }
 
 proto::resource::v1::Resource OtlpRecordable::ProtoResource() const noexcept
@@ -106,7 +85,7 @@ void OtlpRecordable::SetResource(const sdk::resource::Resource &resource) noexce
 void OtlpRecordable::SetAttribute(nostd::string_view key,
                                   const common::AttributeValue &value) noexcept
 {
-  auto *attribute = span_->add_attributes();
+  auto *attribute = span_.add_attributes();
   OtlpRecordableUtils::PopulateAttribute(attribute, key, value);
 }
 
@@ -114,7 +93,7 @@ void OtlpRecordable::AddEvent(nostd::string_view name,
                               common::SystemTimestamp timestamp,
                               const common::KeyValueIterable &attributes) noexcept
 {
-  auto *event = span_->add_events();
+  auto *event = span_.add_events();
   event->set_name(name.data(), name.size());
   event->set_time_unix_nano(timestamp.time_since_epoch().count());
 
@@ -127,7 +106,7 @@ void OtlpRecordable::AddEvent(nostd::string_view name,
 void OtlpRecordable::AddLink(const trace::SpanContext &span_context,
                              const common::KeyValueIterable &attributes) noexcept
 {
-  auto *link = span_->add_links();
+  auto *link = span_.add_links();
   link->set_trace_id(reinterpret_cast<const char *>(span_context.trace_id().Id().data()),
                      trace::TraceId::kSize);
   link->set_span_id(reinterpret_cast<const char *>(span_context.span_id().Id().data()),
@@ -141,16 +120,16 @@ void OtlpRecordable::AddLink(const trace::SpanContext &span_context,
 
 void OtlpRecordable::SetStatus(trace::StatusCode code, nostd::string_view description) noexcept
 {
-  span_->mutable_status()->set_code(proto::trace::v1::Status_StatusCode(code));
+  span_.mutable_status()->set_code(proto::trace::v1::Status_StatusCode(code));
   if (code == trace::StatusCode::kError)
   {
-    span_->mutable_status()->set_message(description.data(), description.size());
+    span_.mutable_status()->set_message(description.data(), description.size());
   }
 }
 
 void OtlpRecordable::SetName(nostd::string_view name) noexcept
 {
-  span_->set_name(name.data(), name.size());
+  span_.set_name(name.data(), name.size());
 }
 
 void OtlpRecordable::SetSpanKind(trace::SpanKind span_kind) noexcept
@@ -186,18 +165,18 @@ void OtlpRecordable::SetSpanKind(trace::SpanKind span_kind) noexcept
       proto_span_kind = proto::trace::v1::Span_SpanKind::Span_SpanKind_SPAN_KIND_UNSPECIFIED;
   }
 
-  span_->set_kind(proto_span_kind);
+  span_.set_kind(proto_span_kind);
 }
 
 void OtlpRecordable::SetStartTime(common::SystemTimestamp start_time) noexcept
 {
-  span_->set_start_time_unix_nano(start_time.time_since_epoch().count());
+  span_.set_start_time_unix_nano(start_time.time_since_epoch().count());
 }
 
 void OtlpRecordable::SetDuration(std::chrono::nanoseconds duration) noexcept
 {
-  const uint64_t unix_end_time = span_->start_time_unix_nano() + duration.count();
-  span_->set_end_time_unix_nano(unix_end_time);
+  const uint64_t unix_end_time = span_.start_time_unix_nano() + duration.count();
+  span_.set_end_time_unix_nano(unix_end_time);
 }
 
 void OtlpRecordable::SetInstrumentationLibrary(
