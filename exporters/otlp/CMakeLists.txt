@@ -1,5 +1,5 @@
 add_library(
-  opentelemetry_otlp_recordable
+  opentelemetry_otlp_recordable STATIC
   src/otlp_log_recordable.cc src/otlp_recordable.cc
   src/otlp_recordable_utils.cc)
 set_target_properties(opentelemetry_otlp_recordable PROPERTIES EXPORT_NAME
