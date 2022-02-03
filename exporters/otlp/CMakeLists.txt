@@ -31,18 +31,17 @@ target_compile_definitions(opentelemetry_exporter_otlp_grpc PUBLIC OTEL_EXPORT)
 
   list(APPEND OPENTELEMETRY_OTLP_TARGETS opentelemetry_exporter_otlp_grpc)
 
-  add_library(opentelemetry_exporter_otlp_grpc_log
-              src/otlp_grpc_log_exporter.cc)
+  if(WITH_LOGS_PREVIEW)
+    add_library(opentelemetry_exporter_otlp_grpc_log
+                  src/otlp_grpc_log_exporter.cc)
+    set_target_properties(opentelemetry_exporter_otlp_grpc_log
+                            PROPERTIES EXPORT_NAME otlp_grpc_log_exporter)
+    target_link_libraries(opentelemetry_exporter_otlp_grpc_log
+                            PUBLIC opentelemetry_api opentelemetry_otlp_recordable gRPC::grpc++)
+    target_compile_definitions(opentelemetry_exporter_otlp_grpc_log PUBLIC OTEL_EXPORT)
 
-  set_target_properties(opentelemetry_exporter_otlp_grpc_log
-                        PROPERTIES EXPORT_NAME otlp_grpc_log_exporter)
-
-  target_link_libraries(opentelemetry_exporter_otlp_grpc_log
-                        PUBLIC opentelemetry_api opentelemetry_otlp_recordable gRPC::grpc++)
-  
-target_compile_definitions(opentelemetry_exporter_otlp_grpc_log PUBLIC OTEL_EXPORT)
-
-  list(APPEND OPENTELEMETRY_OTLP_TARGETS opentelemetry_exporter_otlp_grpc_log)
+    list(APPEND OPENTELEMETRY_OTLP_TARGETS opentelemetry_exporter_otlp_grpc_log)
+  endif()
 endif()
 
 if(WITH_OTLP_HTTP)

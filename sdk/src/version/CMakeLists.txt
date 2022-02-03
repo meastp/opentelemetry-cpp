@@ -1,4 +1,4 @@
-add_library(opentelemetry_version version.cc)
+add_library(opentelemetry_version STATIC version.cc)
 
 set_target_properties(opentelemetry_version PROPERTIES EXPORT_NAME version)
 
