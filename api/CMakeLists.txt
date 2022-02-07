@@ -16,6 +16,7 @@ else()
         include/opentelemetry/baggage/baggage_context.cc 
         include/opentelemetry/common/kv_properties.cc 
         include/opentelemetry/context/propagation/global_propagator.cc
+        include/opentelemetry/context/context.cc 
         include/opentelemetry/context/runtime_context.cc 
         include/opentelemetry/metrics/provider.cc 
         include/opentelemetry/trace/noop.cc 
