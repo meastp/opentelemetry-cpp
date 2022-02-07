@@ -25,17 +25,9 @@ namespace propagation
 class OTEL_API GlobalTextMapPropagator
 {
 public:
-  static nostd::shared_ptr<TextMapPropagator> GetGlobalPropagator() noexcept
-  {
-    std::lock_guard<common::SpinLockMutex> guard(GetLock());
-    return nostd::shared_ptr<TextMapPropagator>(GetPropagator());
-  }
+  static nostd::shared_ptr<TextMapPropagator> GetGlobalPropagator() noexcept;
 
-  static void SetGlobalPropagator(nostd::shared_ptr<TextMapPropagator> prop) noexcept
-  {
-    std::lock_guard<common::SpinLockMutex> guard(GetLock());
-    GetPropagator() = prop;
-  }
+  static void SetGlobalPropagator(nostd::shared_ptr<TextMapPropagator> prop) noexcept;
 
 private:
   static nostd::shared_ptr<TextMapPropagator> &GetPropagator() noexcept;

@@ -134,6 +134,11 @@
           "type": "BOOL"
         },
         {
+          "name": "BUILD_W3CTRACECONTEXT_TEST",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
           "name": "VCPKG_TARGET_TRIPLET",
           "value": "x64-windows-custom2",
           "type": "STRING"
@@ -199,6 +204,11 @@
         {
           "name": "WITH_HEADER_ONLY_API",
           "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "BUILD_W3CTRACECONTEXT_TEST",
+          "value": "True",
           "type": "BOOL"
         },
         {

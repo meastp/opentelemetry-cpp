@@ -13,7 +13,7 @@ namespace context
 // RuntimeContext object and is associated with a context object, and
 // can be provided to the RuntimeContext Detach method to remove the
 // associated context from the RuntimeContext.
-class Token
+class OTEL_API Token
 {
 public:
   bool operator==(const Context &other) const noexcept { return context_ == other; }
@@ -23,11 +23,11 @@ public:
 private:
   friend class RuntimeContextStorage;
 
-  Token() noexcept = default;
+  Token() noexcept;
 
   // A constructor that sets the token's Context object to the
   // one that was passed in.
-  Token(const Context &context) : context_(context) {}
+  Token(const Context &context);
 
   const Context context_;
 };
@@ -39,7 +39,7 @@ private:
  * this class and passing an initialized RuntimeContextStorage object to
  * RuntimeContext::SetRuntimeContextStorage.
  */
-class RuntimeContextStorage
+class OTEL_API RuntimeContextStorage
 {
 public:
   /**
@@ -62,13 +62,10 @@ public:
    */
   virtual bool Detach(Token &token) noexcept = 0;
 
-  virtual ~RuntimeContextStorage(){};
+  virtual ~RuntimeContextStorage();
 
 protected:
-  nostd::unique_ptr<Token> CreateToken(const Context &context) noexcept
-  {
-    return nostd::unique_ptr<Token>(new Token(context));
-  }
+  nostd::unique_ptr<Token> CreateToken(const Context &context) noexcept;
 };
 
 /**
@@ -84,18 +81,15 @@ class OTEL_API RuntimeContext
 {
 public:
   // Return the current context.
-  static Context GetCurrent() noexcept { return GetRuntimeContextStorage()->GetCurrent(); }
+  static Context GetCurrent() noexcept;
 
   // Sets the current 'Context' object. Returns a token
   // that can be used to reset to the previous Context.
-  static nostd::unique_ptr<Token> Attach(const Context &context) noexcept
-  {
-    return GetRuntimeContextStorage()->Attach(context);
-  }
+  static nostd::unique_ptr<Token> Attach(const Context &context) noexcept;
 
   // Resets the context to a previous value stored in the
   // passed in token. Returns true if successful, false otherwise
-  static bool Detach(Token &token) noexcept { return GetRuntimeContextStorage()->Detach(token); }
+  static bool Detach(Token &token) noexcept;
 
   // Sets the Key and Value into the passed in context or if a context is not
   // passed in, the RuntimeContext.
@@ -105,37 +99,13 @@ public:
   // context will be returned.
   static Context SetValue(nostd::string_view key,
                           const ContextValue &value,
-                          Context *context = nullptr) noexcept
-  {
-    Context temp_context;
-    if (context == nullptr)
-    {
-      temp_context = GetCurrent();
-    }
-    else
-    {
-      temp_context = *context;
-    }
-    return temp_context.SetValue(key, value);
-  }
+                          Context *context = nullptr) noexcept;
 
   // Returns the value associated with the passed in key and either the
   // passed in context* or the runtime context if a context is not passed in.
   // Should be used to get values from the current RuntimeContext, is
   // essentially equivalent to RuntimeContext::GetCurrent().GetValue(key).
-  static ContextValue GetValue(nostd::string_view key, Context *context = nullptr) noexcept
-  {
-    Context temp_context;
-    if (context == nullptr)
-    {
-      temp_context = GetCurrent();
-    }
-    else
-    {
-      temp_context = *context;
-    }
-    return temp_context.GetValue(key);
-  }
+  static ContextValue GetValue(nostd::string_view key, Context *context = nullptr) noexcept;
 
   /**
    * Provide a custom runtime context storage.
@@ -146,24 +116,13 @@ public:
    *
    * @param storage a custom runtime context storage
    */
-  static void SetRuntimeContextStorage(nostd::shared_ptr<RuntimeContextStorage> storage) noexcept
-  {
-    GetStorage() = storage;
-  }
+  static void SetRuntimeContextStorage(nostd::shared_ptr<RuntimeContextStorage> storage) noexcept;
 
 private:
-  static nostd::shared_ptr<RuntimeContextStorage> GetRuntimeContextStorage() noexcept
-  {
-    return GetStorage();
-  }
+  static nostd::shared_ptr<RuntimeContextStorage> GetRuntimeContextStorage() noexcept;
 
   static nostd::shared_ptr<RuntimeContextStorage> &GetStorage() noexcept;
 };
-
-inline Token::~Token()
-{
-  context::RuntimeContext::Detach(*this);
-}
 
 // The ThreadLocalContextStorage class is a derived class from
 // RuntimeContextStorage and provides a wrapper for propagating context through
@@ -172,45 +131,19 @@ inline Token::~Token()
 class OTEL_API ThreadLocalContextStorage : public RuntimeContextStorage
 {
 public:
-  ThreadLocalContextStorage() noexcept = default;
+  ThreadLocalContextStorage() noexcept;
 
   // Return the current context.
-  Context GetCurrent() noexcept override { return GetStack().Top(); }
+  Context GetCurrent() noexcept override;
 
   // Resets the context to the value previous to the passed in token. This will
   // also detach all child contexts of the passed in token.
   // Returns true if successful, false otherwise.
-  bool Detach(Token &token) noexcept override
-  {
-    // In most cases, the context to be detached is on the top of the stack.
-    if (token == GetStack().Top())
-    {
-      GetStack().Pop();
-      return true;
-    }
-
-    if (!GetStack().Contains(token))
-    {
-      return false;
-    }
-
-    while (!(token == GetStack().Top()))
-    {
-      GetStack().Pop();
-    }
-
-    GetStack().Pop();
-
-    return true;
-  }
+  bool Detach(Token &token) noexcept override;
 
   // Sets the current 'Context' object. Returns a token
   // that can be used to reset to the previous Context.
-  nostd::unique_ptr<Token> Attach(const Context &context) noexcept override
-  {
-    GetStack().Push(context);
-    return CreateToken(context);
-  }
+  nostd::unique_ptr<Token> Attach(const Context &context) noexcept override;
 
 private:
   // A nested class to store the attached contexts in a stack.
@@ -218,84 +151,24 @@ private:
   {
     friend class ThreadLocalContextStorage;
 
-    Stack() noexcept : size_(0), capacity_(0), base_(nullptr){};
+    Stack() noexcept;
 
     // Pops the top Context off the stack.
-    void Pop() noexcept
-    {
-      if (size_ == 0)
-      {
-        return;
-      }
-      // Store empty Context before decrementing `size`, to ensure
-      // the shared_ptr object (if stored in prev context object ) are released.
-      // The stack is not resized, and the unused memory would be reutilised
-      // for subsequent context storage.
-      base_[size_ - 1] = Context();
-      size_ -= 1;
-    }
+    void Pop() noexcept;
 
-    bool Contains(const Token &token) const noexcept
-    {
-      for (size_t pos = size_; pos > 0; --pos)
-      {
-        if (token == base_[pos - 1])
-        {
-          return true;
-        }
-      }
-
-      return false;
-    }
+    bool Contains(const Token &token) const noexcept;
 
     // Returns the Context at the top of the stack.
-    Context Top() const noexcept
-    {
-      if (size_ == 0)
-      {
-        return Context();
-      }
-      return base_[size_ - 1];
-    }
+    Context Top() const noexcept;
 
     // Pushes the passed in context pointer to the top of the stack
     // and resizes if necessary.
-    void Push(const Context &context) noexcept
-    {
-      size_++;
-      if (size_ > capacity_)
-      {
-        Resize(size_ * 2);
-      }
-      base_[size_ - 1] = context;
-    }
+    void Push(const Context &context) noexcept;
 
     // Reallocates the storage array to the pass in new capacity size.
-    void Resize(size_t new_capacity) noexcept
-    {
-      size_t old_size = size_ - 1;
-      if (new_capacity == 0)
-      {
-        new_capacity = 2;
-      }
-      Context *temp = new Context[new_capacity];
-      if (base_ != nullptr)
-      {
-        // vs2015 does not like this construct considering it unsafe:
-        // - std::copy(base_, base_ + old_size, temp);
-        // Ref.
-        // https://stackoverflow.com/questions/12270224/xutility2227-warning-c4996-std-copy-impl
-        for (size_t i = 0; i < (std::min)(old_size, new_capacity); i++)
-        {
-          temp[i] = base_[i];
-        }
-        delete[] base_;
-      }
-      base_     = temp;
-      capacity_ = new_capacity;
-    }
+    void Resize(size_t new_capacity) noexcept;
 
-    ~Stack() noexcept { delete[] base_; }
+    ~Stack() noexcept;
 
     size_t size_;
     size_t capacity_;
@@ -304,11 +177,6 @@ private:
 
   Stack &GetStack();
 };
-
-static RuntimeContextStorage *GetDefaultStorage() noexcept
-{
-  return new ThreadLocalContextStorage();
-}
 }  // namespace context
 OPENTELEMETRY_END_NAMESPACE
 

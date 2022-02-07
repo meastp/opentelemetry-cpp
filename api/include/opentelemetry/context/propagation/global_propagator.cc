@@ -11,7 +11,19 @@ namespace context
 {
 namespace propagation
 {
+OTEL_HEADER_ONLY_API_INLINE nostd::shared_ptr<TextMapPropagator>
+GlobalTextMapPropagator::GetGlobalPropagator() noexcept
+{
+  std::lock_guard<common::SpinLockMutex> guard(GetLock());
+  return nostd::shared_ptr<TextMapPropagator>(GetPropagator());
+}
 
+OTEL_HEADER_ONLY_API_INLINE void GlobalTextMapPropagator::SetGlobalPropagator(
+    nostd::shared_ptr<TextMapPropagator> prop) noexcept
+{
+  std::lock_guard<common::SpinLockMutex> guard(GetLock());
+  GetPropagator() = prop;
+}
 OTEL_HEADER_ONLY_API_INLINE nostd::shared_ptr<TextMapPropagator>
     &GlobalTextMapPropagator::GetPropagator() noexcept
 {
