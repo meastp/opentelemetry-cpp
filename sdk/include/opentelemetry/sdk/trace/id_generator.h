@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 #pragma once
+#include "opentelemetry/sdk_export.h"
 #include "opentelemetry/trace/span_id.h"
 #include "opentelemetry/trace/trace_id.h"
 #include "opentelemetry/version.h"
@@ -13,11 +14,11 @@ namespace trace
 {
 
 /** IdGenerator provides an interface for generating Trace Id and Span Id */
-class IdGenerator
+class OTEL_SDK_API IdGenerator
 {
 
 public:
-  virtual ~IdGenerator() = default;
+  virtual ~IdGenerator();
 
   /** Returns a SpanId represented by opaque 128-bit trace identifier */
   virtual opentelemetry::trace::SpanId GenerateSpanId() noexcept = 0;

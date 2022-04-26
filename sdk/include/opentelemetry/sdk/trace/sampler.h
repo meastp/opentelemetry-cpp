@@ -4,7 +4,7 @@
 #pragma once
 
 #include "opentelemetry/common/attribute_value.h"
-#include "opentelemetry/export.h"
+#include "opentelemetry/sdk_export.h"
 #include "opentelemetry/trace/span.h"
 #include "opentelemetry/trace/span_context.h"
 #include "opentelemetry/trace/span_context_kv_iterable.h"
@@ -39,7 +39,7 @@ enum class Decision
  * The output of ShouldSample.
  * It contains a sampling Decision and a set of Span Attributes.
  */
-struct OTEL_API SamplingResult
+struct OTEL_SDK_API SamplingResult
 {
   Decision decision;
   // A set of span Attributes that will also be added to the Span. Can be nullptr.
@@ -52,10 +52,10 @@ struct OTEL_API SamplingResult
  * The Sampler interface allows users to create custom samplers which will return a
  * SamplingResult based on information that is typically available just before the Span was created.
  */
-class OTEL_API Sampler
+class OTEL_SDK_API Sampler
 {
 public:
-  virtual ~Sampler() = default;
+  virtual ~Sampler();
   /**
    * Called during Span creation to make a sampling decision.
    *

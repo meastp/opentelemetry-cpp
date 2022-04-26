@@ -6,6 +6,7 @@
 #include <chrono>
 #include <memory>
 #include "opentelemetry/sdk/trace/recordable.h"
+#include "opentelemetry/sdk_export.h"
 
 OPENTELEMETRY_BEGIN_NAMESPACE
 namespace sdk
@@ -18,10 +19,10 @@ namespace trace
  * Built-in span processors are responsible for batching and conversion of
  * spans to exportable representation and passing batches to exporters.
  */
-class SpanProcessor
+class OTEL_SDK_API SpanProcessor
 {
 public:
-  virtual ~SpanProcessor() = default;
+  virtual ~SpanProcessor();
 
   /**
    * Create a span recordable. This requests a new span recordable from the

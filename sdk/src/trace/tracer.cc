@@ -65,14 +65,14 @@ nostd::shared_ptr<trace_api::Span> Tracer::StartSpan(
   auto sampling_result = context_->GetSampler().ShouldSample(parent_context, trace_id, name,
                                                              options.kind, attributes, links);
   auto trace_flags     = sampling_result.decision == Decision::DROP
-                         ? trace_api::TraceFlags{}
-                         : trace_api::TraceFlags{trace_api::TraceFlags::kIsSampled};
+                             ? trace_api::TraceFlags{}
+                             : trace_api::TraceFlags{trace_api::TraceFlags::kIsSampled};
 
-  auto span_context = std::unique_ptr<trace_api::SpanContext>(new trace_api::SpanContext(
-      trace_id, span_id, trace_flags, false,
-      sampling_result.trace_state ? sampling_result.trace_state
-                                  : is_parent_span_valid ? parent_context.trace_state()
-                                                         : trace_api::TraceState::GetDefault()));
+  auto span_context = std::unique_ptr<trace_api::SpanContext>(
+      new trace_api::SpanContext(trace_id, span_id, trace_flags, false,
+                                 sampling_result.trace_state ? sampling_result.trace_state
+                                 : is_parent_span_valid      ? parent_context.trace_state()
+                                                        : trace_api::TraceState::GetDefault()));
 
   if (sampling_result.decision == Decision::DROP)
   {
@@ -111,6 +111,37 @@ void Tracer::CloseWithMicroseconds(uint64_t timeout) noexcept
 {
   (void)timeout;
 }
+
+/** Returns the configured span processor. */
+SpanProcessor &Tracer::GetProcessor() noexcept
+{
+  return context_->GetProcessor();
+}
+
+/** Returns the configured Id generator */
+IdGenerator &Tracer::GetIdGenerator() const noexcept
+{
+  return context_->GetIdGenerator();
+}
+
+/** Returns the associated instruementation library */
+const InstrumentationLibrary &Tracer::GetInstrumentationLibrary() const noexcept
+{
+  return *instrumentation_library_;
+}
+
+/** Returns the currently configured resource **/
+const opentelemetry::sdk::resource::Resource &Tracer::GetResource()
+{
+  return context_->GetResource();
+}
+
+// Note: Test only
+Sampler &Tracer::GetSampler()
+{
+  return context_->GetSampler();
+}
+
 }  // namespace trace
 }  // namespace sdk
 OPENTELEMETRY_END_NAMESPACE

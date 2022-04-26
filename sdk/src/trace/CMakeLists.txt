@@ -3,12 +3,13 @@ add_library(
   tracer_context.cc
   tracer_provider.cc
   tracer.cc
-  span.cc
+  span.cc recordable.cc
   batch_span_processor.cc
   samplers/parent.cc
   samplers/trace_id_ratio.cc
   random_id_generator.cc
-  simple_processor.cc)
+  simple_processor.cc processor.cc exporter.cc id_generator.cc multi_recordable.cc multi_span_processor.cc
+sampler.cc span_data.cc)
 
 set_target_properties(opentelemetry_trace PROPERTIES EXPORT_NAME trace)
 

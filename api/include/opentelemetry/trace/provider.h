@@ -26,20 +26,12 @@ public:
    * By default, a no-op TracerProvider is returned. This will never return a
    * nullptr TracerProvider.
    */
-  static nostd::shared_ptr<TracerProvider> GetTracerProvider() noexcept
-  {
-    std::lock_guard<common::SpinLockMutex> guard(GetLock());
-    return nostd::shared_ptr<TracerProvider>(GetProvider());
-  }
+  static nostd::shared_ptr<TracerProvider> GetTracerProvider() noexcept;
 
   /**
    * Changes the singleton TracerProvider.
    */
-  static void SetTracerProvider(nostd::shared_ptr<TracerProvider> tp) noexcept
-  {
-    std::lock_guard<common::SpinLockMutex> guard(GetLock());
-    GetProvider() = tp;
-  }
+  static void SetTracerProvider(nostd::shared_ptr<TracerProvider> tp) noexcept;
 
 private:
   static nostd::shared_ptr<TracerProvider> &GetProvider() noexcept;

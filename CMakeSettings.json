@@ -53,12 +53,12 @@
         },
         {
           "name": "VCPKG_OVERLAY_TRIPLETS",
-          "value": "C:\\Users\\mattar\\Source\\Repos\\opentelemetry-cpp\\tools\\triplets",
+          "value": "C:\\Users\\mattar\\Source\\Repos\\opentelemetry-cpp-win\\tools\\triplets",
           "type": "STRING"
         },
         {
           "name": "VCPKG_OVERLAY_PORTS",
-          "value": "C:\\Users\\mattar\\Source\\Repos\\opentelemetry-cpp\\tools\\ports",
+          "value": "C:\\Users\\mattar\\Source\\Repos\\opentelemetry-cpp-win\\tools\\ports",
           "type": "STRING"
         }
       ]
@@ -150,12 +150,12 @@
         },
         {
           "name": "VCPKG_OVERLAY_TRIPLETS",
-          "value": "C:\\Users\\mattar\\Source\\Repos\\opentelemetry-cpp\\tools\\triplets",
+          "value": "C:\\Users\\mattar\\Source\\Repos\\opentelemetry-cpp-win\\tools\\triplets",
           "type": "STRING"
         },
         {
           "name": "VCPKG_OVERLAY_PORTS",
-          "value": "C:\\Users\\mattar\\Source\\Repos\\opentelemetry-cpp\\tools\\ports",
+          "value": "C:\\Users\\mattar\\Source\\Repos\\opentelemetry-cpp-win\\tools\\ports",
           "type": "STRING"
         }
       ]
@@ -228,12 +228,12 @@
         },
         {
           "name": "VCPKG_OVERLAY_TRIPLETS",
-          "value": "C:\\Users\\mattar\\Source\\Repos\\opentelemetry-cpp\\tools\\triplets",
+          "value": "C:\\Users\\mattar\\Source\\Repos\\opentelemetry-cpp-win\\tools\\triplets",
           "type": "STRING"
         },
         {
           "name": "VCPKG_OVERLAY_PORTS",
-          "value": "C:\\Users\\mattar\\Source\\Repos\\opentelemetry-cpp\\tools\\ports",
+          "value": "C:\\Users\\mattar\\Source\\Repos\\opentelemetry-cpp-win\\tools\\ports",
           "type": "STRING"
         }
       ]

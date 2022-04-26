@@ -4,6 +4,7 @@
 #pragma once
 
 #include "opentelemetry/context/context.h"
+#include "opentelemetry/export.h"
 #include "opentelemetry/nostd/shared_ptr.h"
 #include "opentelemetry/nostd/string_view.h"
 #include "opentelemetry/nostd/unique_ptr.h"
@@ -25,10 +26,10 @@ namespace trace
  * This class provides methods for manipulating the context, creating spans, and controlling spans'
  * lifecycles.
  */
-class Tracer
+class OTEL_API Tracer
 {
 public:
-  virtual ~Tracer() = default;
+  virtual ~Tracer();
   /**
    * Starts a span.
    *
@@ -67,7 +68,7 @@ public:
   template <class T,
             class U,
             nostd::enable_if_t<common::detail::is_key_value_iterable<T>::value> * = nullptr,
-            nostd::enable_if_t<detail::is_span_context_kv_iterable<U>::value> *   = nullptr>
+            nostd::enable_if_t<detail::is_span_context_kv_iterable<U>::value>   * = nullptr>
   nostd::shared_ptr<Span> StartSpan(nostd::string_view name,
                                     const T &attributes,
                                     const U &links,
@@ -144,25 +145,14 @@ public:
    * @param span the span that should be set as the new active span.
    * @return a Scope that controls how long the span will be active.
    */
-  static Scope WithActiveSpan(nostd::shared_ptr<Span> &span) noexcept { return Scope{span}; }
+  static Scope WithActiveSpan(nostd::shared_ptr<Span> &span) noexcept;
 
   /**
    * Get the currently active span.
    * @return the currently active span, or an invalid default span if no span
    * is active.
    */
-  static nostd::shared_ptr<Span> GetCurrentSpan() noexcept
-  {
-    context::ContextValue active_span = context::RuntimeContext::GetValue(kSpanKey);
-    if (nostd::holds_alternative<nostd::shared_ptr<Span>>(active_span))
-    {
-      return nostd::get<nostd::shared_ptr<Span>>(active_span);
-    }
-    else
-    {
-      return nostd::shared_ptr<Span>(new DefaultSpan(SpanContext::GetInvalid()));
-    }
-  }
+  static nostd::shared_ptr<Span> GetCurrentSpan() noexcept;
 
   /**
    * Force any buffered spans to flush.

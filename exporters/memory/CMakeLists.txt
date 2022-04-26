@@ -18,7 +18,7 @@ install(
 install(
   DIRECTORY include/opentelemetry/exporters/memory
   DESTINATION include/opentelemetry/exporters/
-  FILES_MATCHING
+  FILES_MATCHING 
   PATTERN "*.h")
 
 if(BUILD_TESTING)
@@ -28,12 +28,12 @@ if(BUILD_TESTING)
 
   target_link_libraries(
     in_memory_span_data_test ${GTEST_BOTH_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT}
-    opentelemetry_exporter_in_memory opentelemetry_resources)
+    opentelemetry_exporter_in_memory opentelemetry_resources opentelemetry_trace)
 
   target_link_libraries(
     in_memory_span_exporter_test ${GTEST_BOTH_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT} opentelemetry_exporter_in_memory
-    opentelemetry_resources)
+    opentelemetry_resources opentelemetry_trace)
 
   gtest_add_tests(
     TARGET in_memory_span_data_test

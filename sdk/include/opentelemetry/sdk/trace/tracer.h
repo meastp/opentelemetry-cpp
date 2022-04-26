@@ -44,22 +44,19 @@ public:
   void CloseWithMicroseconds(uint64_t timeout) noexcept override;
 
   /** Returns the configured span processor. */
-  SpanProcessor &GetProcessor() noexcept { return context_->GetProcessor(); }
+  SpanProcessor &GetProcessor() noexcept;
 
   /** Returns the configured Id generator */
-  IdGenerator &GetIdGenerator() const noexcept { return context_->GetIdGenerator(); }
+  IdGenerator &GetIdGenerator() const noexcept;
 
   /** Returns the associated instruementation library */
-  const InstrumentationLibrary &GetInstrumentationLibrary() const noexcept
-  {
-    return *instrumentation_library_;
-  }
+  const InstrumentationLibrary &GetInstrumentationLibrary() const noexcept;
 
   /** Returns the currently configured resource **/
-  const opentelemetry::sdk::resource::Resource &GetResource() { return context_->GetResource(); }
+  const opentelemetry::sdk::resource::Resource &GetResource();
 
   // Note: Test only
-  Sampler &GetSampler() { return context_->GetSampler(); }
+  Sampler &GetSampler();
 
 private:
   // order of declaration is important here - instrumentation library should destroy after

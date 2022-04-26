@@ -19,9 +19,14 @@ else()
         include/opentelemetry/context/context.cc 
         include/opentelemetry/context/runtime_context.cc 
         include/opentelemetry/metrics/provider.cc 
+        include/opentelemetry/trace/default_span.cc 
         include/opentelemetry/trace/noop.cc 
         include/opentelemetry/trace/provider.cc 
-        include/opentelemetry/trace/trace_state.cc)
+        include/opentelemetry/trace/scope.cc 
+        include/opentelemetry/trace/span.cc 
+        include/opentelemetry/trace/trace_state.cc
+        include/opentelemetry/trace/tracer.cc
+        include/opentelemetry/trace/tracer_provider.cc)
 
     target_compile_definitions(opentelemetry_api PUBLIC OTEL_EXPORT)
 endif()

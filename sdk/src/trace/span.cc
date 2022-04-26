@@ -178,6 +178,11 @@ bool Span::IsRecording() const noexcept
   std::lock_guard<std::mutex> lock_guard{mu_};
   return recordable_ != nullptr;
 }
+
+opentelemetry::trace::SpanContext Span::GetContext() const noexcept
+{
+  return *span_context_.get();
+}
 }  // namespace trace
 }  // namespace sdk
 OPENTELEMETRY_END_NAMESPACE

@@ -27,15 +27,15 @@ class Tracer;
 /**
  * A Span represents a single operation within a Trace.
  */
-class Span
+class OTEL_API Span
 {
 public:
   // Note that Spans should be created using the Tracer class. Please refer to
   // tracer.h for documentation.
-  Span() = default;
+  Span();
 
   // The Span destructor End()s the Span, if it hasn't been ended already.
-  virtual ~Span() = default;
+  virtual ~Span();
 
   // Not copiable or movable.
   Span(const Span &) = delete;

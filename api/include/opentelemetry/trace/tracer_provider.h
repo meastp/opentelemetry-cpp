@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "opentelemetry/export.h"
 #include "opentelemetry/nostd/shared_ptr.h"
 #include "opentelemetry/nostd/string_view.h"
 #include "opentelemetry/trace/tracer.h"
@@ -13,10 +14,10 @@ namespace trace
 /**
  * Creates new Tracer instances.
  */
-class TracerProvider
+class OTEL_API TracerProvider
 {
 public:
-  virtual ~TracerProvider() = default;
+  virtual ~TracerProvider();
   /**
    * Gets or creates a named tracer instance.
    *

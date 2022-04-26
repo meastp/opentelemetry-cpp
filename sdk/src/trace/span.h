@@ -50,10 +50,7 @@ public:
 
   bool IsRecording() const noexcept override;
 
-  opentelemetry::trace::SpanContext GetContext() const noexcept override
-  {
-    return *span_context_.get();
-  }
+  opentelemetry::trace::SpanContext GetContext() const noexcept override;
 
 private:
   std::shared_ptr<Tracer> tracer_;

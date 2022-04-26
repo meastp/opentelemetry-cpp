@@ -7,6 +7,7 @@
 #include "opentelemetry/nostd/span.h"
 #include "opentelemetry/sdk/common/exporter_utils.h"
 #include "opentelemetry/sdk/trace/recordable.h"
+#include "opentelemetry/sdk_export.h"
 
 OPENTELEMETRY_BEGIN_NAMESPACE
 namespace sdk
@@ -17,10 +18,10 @@ namespace trace
  * SpanExporter defines the interface that protocol-specific span exporters must
  * implement.
  */
-class SpanExporter
+class OTEL_SDK_API SpanExporter
 {
 public:
-  virtual ~SpanExporter() = default;
+  virtual ~SpanExporter();
 
   /**
    * Create a span recordable. This object will be used to record span data and
