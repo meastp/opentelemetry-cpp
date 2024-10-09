@@ -19,7 +19,7 @@ class Meter;
 /**
  * Creates new Meter instances.
  */
-class MeterProvider
+class OPENTELEMETRY_EXPORT MeterProvider
 {
 public:
   virtual ~MeterProvider() = default;

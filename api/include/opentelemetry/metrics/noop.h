@@ -198,7 +198,7 @@ public:
 /**
  * No-op implementation of a MeterProvider.
  */
-class NoopMeterProvider final : public MeterProvider
+class OPENTELEMETRY_EXPORT NoopMeterProvider final : public MeterProvider
 {
 public:
   NoopMeterProvider() : meter_{nostd::shared_ptr<Meter>(new NoopMeter)} {}
